@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#667eea">
     <meta property="og:title" content="Interactive Exercises Directory">
     <meta property="og:description" content="Access our comprehensive collection of English learning exercises organized by CEFR levels">
-    <title>Interactive English Exercises - CEFR Levels A1-C1+</title>
+    <title>Interactive English Exercises - CEFR Levels A2-C1+</title>
     <style>
         * {
             box-sizing: border-box;
@@ -154,9 +154,6 @@
             transition: all 0.2s ease;
         }
 
-        .cefr-a1 { color: #10b981; border-color: #d1fae5; background: #ecfdf5; }
-        .cefr-a1.active { background: #10b981; color: white; border-color: #10b981; }
-
         .cefr-a2 { color: #3b82f6; border-color: #dbeafe; background: #eff6ff; }
         .cefr-a2.active { background: #3b82f6; color: white; border-color: #3b82f6; }
 
@@ -266,7 +263,6 @@
             color: white;
         }
 
-        .badge-a1 { background: #10b981; }
         .badge-a2 { background: #3b82f6; }
         .badge-b1 { background: #f59e0b; }
         .badge-b2 { background: #ef4444; }
@@ -452,7 +448,7 @@
 
 <div class="header">
     <h1>📚 Interactive English Exercises</h1>
-    <p>Master English at Your Level — From Beginner (A1) to Proficient (C1+)</p>
+    <p>Master English at Your Level — From Elementary (A2) to Proficient (C1+)</p>
 </div>
 
 <div class="container">
@@ -472,7 +468,7 @@
     </div>
 
     <div class="cefr-info-box">
-        <strong>📌 CEFR Levels Explained:</strong> A1 (Beginner) · A2 (Elementary) · B1 (Intermediate) · B2 (Upper-Intermediate) · C1 (Advanced) · C1+ (Proficient+)
+        <strong>📌 CEFR Levels Explained:</strong> A2 (Elementary) · B1 (Intermediate) · B2 (Upper-Intermediate) · C1 (Advanced) · C1+ (Proficient+)
     </div>
 
     <div class="controls" role="region" aria-label="Search and Filter Controls">
@@ -490,7 +486,7 @@
         <div class="filter-group">
             <span class="filter-label">Filter by CEFR Level:</span>
             <div class="cefr-filters" id="cefrFilters" role="group" aria-label="CEFR level filters">
-                <button class="filter-btn cefr-btn cefr-a1 active" data-cefr="all" aria-pressed="true">All Levels</button>
+                <button class="filter-btn cefr-btn cefr-a2 active" data-cefr="all" aria-pressed="true">All Levels</button>
             </div>
         </div>
         
@@ -537,7 +533,6 @@
         { name: "Fasteners A2", file: "fasteners-a2.html", category: "Vocabulary", cefr: "A2" },
         { name: "Few Little", file: "few-little.html", category: "Grammar", cefr: "B1" },
         { name: "Finance B1", file: "finance-b1.html", category: "Professional", cefr: "B1" },
-        { name: "Grammar Challenge A1", file: "grammar-challenge-a1.html", category: "Grammar", cefr: "A1" },
         { name: "Grammar Challenge A2", file: "grammar-challenge-a2.html", category: "Grammar", cefr: "A2" },
         { name: "Grammar Challenge B1", file: "grammar-challenge-b1.html", category: "Grammar", cefr: "B1" },
         { name: "Grammar Challenge B2", file: "grammar-challenge-b2.html", category: "Grammar", cefr: "B2" },
@@ -559,14 +554,14 @@
         { name: "Pharmacy B2", file: "pharmacy-b2.html", category: "Vocabulary", cefr: "B2" },
         { name: "Phrasal Verbs at Work B1", file: "phrasal-verbs-at-work-b1.html", category: "Professional", cefr: "B1" },
         { name: "Phrasal Verbs at Work B1+", file: "phrasal-verbs-at-work-b1%2B.html", category: "Professional", cefr: "B1-B2" },
-        { name: "Placement Test 2", file: "placement-test-2.html", category: "Tests", cefr: "A2-B1-C1" },
+        { name: "Placement Test 2", file: "placement-test-2.html", category: "Tests", cefr: "All levels" },
         { name: "Present Continuous Quiz A2", file: "present-continuous-quiz-a2.html", category: "Grammar", cefr: "A2" },
         { name: "Present Simple Passive", file: "present-simple-passive.html", category: "Grammar", cefr: "B1" },
         { name: "Product Design", file: "product-design.html", category: "Professional", cefr: "B1" },
         { name: "Professional Vocabulary B2", file: "professional-vocabulary-b2.html", category: "Vocabulary", cefr: "B2" },
-        { name: "Rhyme Quiz", file: "rhyme-quiz.html", category: "Pronunciation", cefr: "A1" },
-        { name: "Sound Match 1", file: "sound-match-1.html", category: "Pronunciation", cefr: "A1" },
-        { name: "Sound Match 2", file: "sound-match-2.html", category: "Pronunciation", cefr: "A1" },
+        { name: "Rhyme Quiz", file: "rhyme-quiz.html", category: "Pronunciation", cefr: "A2" },
+        { name: "Sound Match 1", file: "sound-match-1.html", category: "Pronunciation", cefr: "A2" },
+        { name: "Sound Match 2", file: "sound-match-2.html", category: "Pronunciation", cefr: "A2" },
         { name: "Supply Planner", file: "supply-planner.html", category: "Professional", cefr: "B2" },
         { name: "Tech Vocab A2", file: "tech-vocab-a2.html", category: "Vocabulary", cefr: "A2" },
         { name: "Travel Film Festival", file: "travel-film-festival.html", category: "Reading", cefr: "B1" },
@@ -582,9 +577,8 @@
     let currentCefr = "all";
     let currentCategory = "all";
 
-    const cefrLevels = ["A1", "A2", "B1", "B2", "C1", "C1+"];
+    const cefrLevels = ["A2", "B1", "B2", "C1", "C1+"];
     const cefrColors = {
-        "A1": "a1",
         "A2": "a2",
         "B1": "b1",
         "B2": "b2",
@@ -606,7 +600,7 @@
         filterContainer.innerHTML = '';
         
         const allBtn = document.createElement('button');
-        allBtn.className = 'filter-btn cefr-btn cefr-a1 active';
+        allBtn.className = 'filter-btn cefr-btn cefr-a2 active';
         allBtn.textContent = 'All Levels';
         allBtn.dataset.cefr = 'all';
         allBtn.setAttribute('aria-pressed', 'true');
@@ -672,7 +666,7 @@
         
         filteredExercises = exercises.filter(ex => {
             const matchesSearch = !term || ex.name.toLowerCase().includes(term);
-            const matchesCefr = currentCefr === 'all' || ex.cefr.includes(currentCefr);
+            const matchesCefr = currentCefr === 'all' || ex.cefr.includes(currentCefr) || ex.cefr === 'All levels';
             const matchesCategory = currentCategory === 'all' || ex.category.toLowerCase() === currentCategory;
             return matchesSearch && matchesCefr && matchesCategory;
         });
@@ -701,12 +695,12 @@
     }
 
     function getCefrBadgeClass(cefr) {
+        if (cefr === 'All levels') return 'badge-c2';
         if (cefr.includes('C1+')) return 'badge-c2';
         if (cefr.includes('C1')) return 'badge-c1';
         if (cefr.includes('B2')) return 'badge-b2';
         if (cefr.includes('B1')) return 'badge-b1';
         if (cefr.includes('A2')) return 'badge-a2';
-        if (cefr.includes('A1')) return 'badge-a1';
         return 'badge-b1';
     }
 
