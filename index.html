@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Interactive English Language Learning Exercises - Grammar, Vocabulary, and Professional English Courses">
-    <meta name="theme-color" content="#1c7ed6">
+    <meta name="theme-color" content="#667eea">
     <meta property="og:title" content="Interactive Exercises Directory">
-    <meta property="og:description" content="Access our comprehensive collection of English learning exercises">
-    <title>Interactive English Exercises - Grammar & Vocabulary</title>
+    <meta property="og:description" content="Access our comprehensive collection of English learning exercises organized by CEFR levels">
+    <title>Interactive English Exercises - CEFR Levels A1-C1+</title>
     <style>
         * {
             box-sizing: border-box;
@@ -94,7 +94,28 @@
             font-size: 1.1rem;
         }
 
-        .category-filters {
+        .filters-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-filters,
+        .cefr-filters {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
@@ -123,10 +144,42 @@
             border-color: #667eea;
         }
 
+        /* CEFR Level Badge Colors */
+        .cefr-btn {
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 10px 18px;
+            border-radius: 6px;
+            border: 2px solid;
+            transition: all 0.2s ease;
+        }
+
+        .cefr-a1 { color: #10b981; border-color: #d1fae5; background: #ecfdf5; }
+        .cefr-a1.active { background: #10b981; color: white; border-color: #10b981; }
+
+        .cefr-a2 { color: #3b82f6; border-color: #dbeafe; background: #eff6ff; }
+        .cefr-a2.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+
+        .cefr-b1 { color: #f59e0b; border-color: #fed7aa; background: #fffbeb; }
+        .cefr-b1.active { background: #f59e0b; color: white; border-color: #f59e0b; }
+
+        .cefr-b2 { color: #ef4444; border-color: #fecaca; background: #fef2f2; }
+        .cefr-b2.active { background: #ef4444; color: white; border-color: #ef4444; }
+
+        .cefr-c1 { color: #8b5cf6; border-color: #ede9fe; background: #faf5ff; }
+        .cefr-c1.active { background: #8b5cf6; color: white; border-color: #8b5cf6; }
+
+        .cefr-c2 { color: #ec4899; border-color: #fbcfe8; background: #fdf2f8; }
+        .cefr-c2.active { background: #ec4899; color: white; border-color: #ec4899; }
+
         .results-info {
             margin-bottom: 20px;
             color: #666;
             font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .grid-directory {
@@ -151,7 +204,7 @@
             font-weight: 600;
             line-height: 1.4;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 100px;
+            min-height: 120px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -201,6 +254,29 @@
             color: white;
         }
 
+        .cefr-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 14px;
+            margin-top: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .badge-a1 { background: #10b981; }
+        .badge-a2 { background: #3b82f6; }
+        .badge-b1 { background: #f59e0b; }
+        .badge-b2 { background: #ef4444; }
+        .badge-c1 { background: #8b5cf6; }
+        .badge-c2 { background: #ec4899; }
+
+        .exercise-card:hover .cefr-badge {
+            filter: brightness(1.2);
+        }
+
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -241,6 +317,21 @@
             margin-top: 4px;
         }
 
+        .cefr-info-box {
+            background: linear-gradient(135deg, #f5f7ff 0%, #eff1ff 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .cefr-info-box strong {
+            color: #667eea;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -257,7 +348,7 @@
 
             .exercise-card {
                 padding: 15px;
-                min-height: 85px;
+                min-height: 100px;
                 font-size: 0.85rem;
             }
 
@@ -270,8 +361,18 @@
                 min-width: unset;
             }
 
-            .category-filters {
+            .category-filters,
+            .cefr-filters {
                 justify-content: center;
+            }
+
+            .filters-section {
+                gap: 12px;
+            }
+
+            .results-info {
+                flex-direction: column;
+                gap: 10px;
             }
         }
 
@@ -350,8 +451,8 @@
 <body>
 
 <div class="header">
-    <h1>📚 Interactive Exercises</h1>
-    <p>Master English Grammar, Vocabulary & Professional Communication</p>
+    <h1>📚 Interactive English Exercises</h1>
+    <p>Master English at Your Level — From Beginner (A1) to Proficient (C1+)</p>
 </div>
 
 <div class="container">
@@ -361,13 +462,17 @@
             <div class="stat-label">Total Exercises</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number" id="categoryCount">0</div>
-            <div class="stat-label">Categories</div>
+            <div class="stat-number" id="cefr-count">0</div>
+            <div class="stat-label">CEFR Levels</div>
         </div>
         <div class="stat-item">
             <div class="stat-number" id="visibleCount">0</div>
             <div class="stat-label">Showing</div>
         </div>
+    </div>
+
+    <div class="cefr-info-box">
+        <strong>📌 CEFR Levels Explained:</strong> A1 (Beginner) · A2 (Elementary) · B1 (Intermediate) · B2 (Upper-Intermediate) · C1 (Advanced) · C1+ (Proficient+)
     </div>
 
     <div class="controls" role="region" aria-label="Search and Filter Controls">
@@ -379,8 +484,21 @@
                 aria-label="Search exercises"
             >
         </div>
-        <div class="category-filters" id="categoryFilters" role="group" aria-label="Category filters">
-            <button class="filter-btn active" data-category="all" aria-pressed="true">All</button>
+    </div>
+
+    <div class="filters-section">
+        <div class="filter-group">
+            <span class="filter-label">Filter by CEFR Level:</span>
+            <div class="cefr-filters" id="cefrFilters" role="group" aria-label="CEFR level filters">
+                <button class="filter-btn cefr-btn cefr-a1 active" data-cefr="all" aria-pressed="true">All Levels</button>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <span class="filter-label">Filter by Category:</span>
+            <div class="category-filters" id="categoryFilters" role="group" aria-label="Category filters">
+                <button class="filter-btn active" data-category="all" aria-pressed="true">All</button>
+            </div>
         </div>
     </div>
 
@@ -392,86 +510,122 @@
 
     <div class="empty-state" id="emptyState" style="display: none;">
         <div class="empty-state-icon">🔍</div>
-        <p>No exercises found matching your search.</p>
+        <p>No exercises found matching your filters.</p>
     </div>
 </div>
 
 <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
 
 <script>
-    // Exercise data with actual filenames from the repository
+    // Exercise data with CEFR levels
     const exercises = [
-        { name: "A Few A Little", file: "a-few-a-little.html", category: "Grammar" },
-        { name: "Accounting Problem 1", file: "accounting-problem-1.html", category: "Professional" },
-        { name: "Accounting Problem 2", file: "accounting-problem-2.html", category: "Professional" },
-        { name: "Accounting Problem 3", file: "accounting-problem-3.html", category: "Professional" },
-        { name: "Accounting Vocab B1", file: "accounting-vocab-b1.html", category: "Vocabulary" },
-        { name: "Always Still", file: "always-still.html", category: "Grammar" },
-        { name: "Atlantic Crossing Conditionals", file: "atlantic-crossing-conditionals.html", category: "Grammar" },
-        { name: "Cars A2", file: "cars-a2.html", category: "Vocabulary" },
-        { name: "Conditional Professional B1", file: "conditional-professional-b1.html", category: "Professional" },
-        { name: "Conditionals A2", file: "conditionals-a2.html", category: "Grammar" },
-        { name: "Conditionals B1", file: "conditionals-b1.html", category: "Grammar" },
-        { name: "Defining Relative Clauses", file: "defining-relative-clauses.html", category: "Grammar" },
-        { name: "Describing Change B1", file: "describing-change-b1.html", category: "Grammar" },
-        { name: "Dimensions Vocab Test", file: "dimensions-vocab-test.html", category: "Vocabulary" },
-        { name: "Electrical Motor Sales Proposal", file: "electrical-motor-sales-proposal.html", category: "Professional" },
-        { name: "Fasteners A2", file: "fasteners-a2.html", category: "Vocabulary" },
-        { name: "Few Little", file: "few-little.html", category: "Grammar" },
-        { name: "Finance B1", file: "finance-b1.html", category: "Professional" },
-        { name: "Grammar Challenge A1", file: "grammar-challenge-a1.html", category: "Grammar" },
-        { name: "Grammar Challenge A2", file: "grammar-challenge-a2.html", category: "Grammar" },
-        { name: "Grammar Challenge B1", file: "grammar-challenge-b1.html", category: "Grammar" },
-        { name: "Grammar Challenge B2", file: "grammar-challenge-b2.html", category: "Grammar" },
-        { name: "Grammar Challenge Multi 1", file: "grammar-challenge-multi-1.html", category: "Grammar" },
-        { name: "Grammar Challenge Multi 2", file: "grammar-challenge-multi-2.html", category: "Grammar" },
-        { name: "Grammar Challenge Multi 3", file: "grammar-challenge-multi-3.html", category: "Grammar" },
-        { name: "Hotel Vocabulary", file: "hotel-vocabulary.html", category: "Vocabulary" },
-        { name: "India's Pharma Revolution", file: "indias-pharma-revolution.html", category: "Reading" },
-        { name: "Industrial Security Vocab", file: "industrial-security-vocab.html", category: "Vocabulary" },
-        { name: "Innovative Product Design", file: "innovative-product-design.html", category: "Professional" },
-        { name: "Lab Equipment Comparison", file: "lab-equipment-comparison.html", category: "Vocabulary" },
-        { name: "Meeting Language", file: "meeting-language.html", category: "Professional" },
-        { name: "Motor Industry Affixes B1", file: "motor-industry-affixes-b1%20B1.html", category: "Vocabulary" },
-        { name: "Negotiation B1", file: "negotiation-b1.html", category: "Professional" },
-        { name: "Office A2", file: "office-a2.html", category: "Vocabulary" },
-        { name: "Organise A Meeting A2", file: "organise-a-meeting-a2.html", category: "Professional" },
-        { name: "Organise A Meeting B1", file: "organise-a-meeting-b1.html", category: "Professional" },
-        { name: "Past Simple Quiz A2", file: "past-simple-quiz-a2.html", category: "Grammar" },
-        { name: "Pharmacy B2", file: "pharmacy-b2.html", category: "Vocabulary" },
-        { name: "Phrasal Verbs at Work B1", file: "phrasal-verbs-at-work-b1.html", category: "Professional" },
-        { name: "Phrasal Verbs at Work B1+", file: "phrasal-verbs-at-work-b1%2B.html", category: "Professional" },
-        { name: "Placement Test 2", file: "placement-test-2.html", category: "Tests" },
-        { name: "Present Continuous Quiz A2", file: "present-continuous-quiz-a2.html", category: "Grammar" },
-        { name: "Present Simple Passive", file: "present-simple-passive.html", category: "Grammar" },
-        { name: "Product Design", file: "product-design.html", category: "Professional" },
-        { name: "Professional Vocabulary B2", file: "professional-vocabulary-b2.html", category: "Vocabulary" },
-        { name: "Rhyme Quiz", file: "rhyme-quiz.html", category: "Pronunciation" },
-        { name: "Sound Match 1", file: "sound-match-1.html", category: "Pronunciation" },
-        { name: "Sound Match 2", file: "sound-match-2.html", category: "Pronunciation" },
-        { name: "Supply Planner", file: "supply-planner.html", category: "Professional" },
-        { name: "Tech Vocab A2", file: "tech-vocab-a2.html", category: "Vocabulary" },
-        { name: "Travel Film Festival", file: "travel-film-festival.html", category: "Reading" },
-        { name: "Travelling Phrasal Verbs", file: "travelling-phrasal-verbs.html", category: "Grammar" },
-        { name: "UK US Vocab A2", file: "uk-us-vocab-a2.html", category: "Vocabulary" },
-        { name: "UK US Vocab B1", file: "uk-us-vocab-b1.html", category: "Vocabulary" },
-        { name: "Vocabulary Matchup", file: "vocabulary-matchup.html", category: "Vocabulary" },
-        { name: "What's IT For A2", file: "whats-it-for-a2.html", category: "Vocabulary" },
-        { name: "Will Vs Going To", file: "will-vs-going-to.html", category: "Grammar" }
+        { name: "A Few A Little", file: "a-few-a-little.html", category: "Grammar", cefr: "B1" },
+        { name: "Accounting Problem 1", file: "accounting-problem-1.html", category: "Professional", cefr: "B1" },
+        { name: "Accounting Problem 2", file: "accounting-problem-2.html", category: "Professional", cefr: "B1" },
+        { name: "Accounting Problem 3", file: "accounting-problem-3.html", category: "Professional", cefr: "B2" },
+        { name: "Accounting Vocab B1", file: "accounting-vocab-b1.html", category: "Vocabulary", cefr: "B1" },
+        { name: "Always Still", file: "always-still.html", category: "Grammar", cefr: "B1" },
+        { name: "Atlantic Crossing Conditionals", file: "atlantic-crossing-conditionals.html", category: "Grammar", cefr: "B1" },
+        { name: "Cars A2", file: "cars-a2.html", category: "Vocabulary", cefr: "A2" },
+        { name: "Conditional Professional B1", file: "conditional-professional-b1.html", category: "Professional", cefr: "B1" },
+        { name: "Conditionals A2", file: "conditionals-a2.html", category: "Grammar", cefr: "A2" },
+        { name: "Conditionals B1", file: "conditionals-b1.html", category: "Grammar", cefr: "B1" },
+        { name: "Defining Relative Clauses", file: "defining-relative-clauses.html", category: "Grammar", cefr: "B1" },
+        { name: "Describing Change B1", file: "describing-change-b1.html", category: "Grammar", cefr: "B1" },
+        { name: "Dimensions Vocab Test", file: "dimensions-vocab-test.html", category: "Vocabulary", cefr: "B1" },
+        { name: "Electrical Motor Sales Proposal", file: "electrical-motor-sales-proposal.html", category: "Professional", cefr: "B2" },
+        { name: "Fasteners A2", file: "fasteners-a2.html", category: "Vocabulary", cefr: "A2" },
+        { name: "Few Little", file: "few-little.html", category: "Grammar", cefr: "B1" },
+        { name: "Finance B1", file: "finance-b1.html", category: "Professional", cefr: "B1" },
+        { name: "Grammar Challenge A1", file: "grammar-challenge-a1.html", category: "Grammar", cefr: "A1" },
+        { name: "Grammar Challenge A2", file: "grammar-challenge-a2.html", category: "Grammar", cefr: "A2" },
+        { name: "Grammar Challenge B1", file: "grammar-challenge-b1.html", category: "Grammar", cefr: "B1" },
+        { name: "Grammar Challenge B2", file: "grammar-challenge-b2.html", category: "Grammar", cefr: "B2" },
+        { name: "Grammar Challenge Multi 1", file: "grammar-challenge-multi-1.html", category: "Grammar", cefr: "B1-B2" },
+        { name: "Grammar Challenge Multi 2", file: "grammar-challenge-multi-2.html", category: "Grammar", cefr: "A2-B1-B2" },
+        { name: "Grammar Challenge Multi 3", file: "grammar-challenge-multi-3.html", category: "Grammar", cefr: "A2-B1-B2" },
+        { name: "Hotel Vocabulary", file: "hotel-vocabulary.html", category: "Vocabulary", cefr: "A2" },
+        { name: "India's Pharma Revolution", file: "indias-pharma-revolution.html", category: "Reading", cefr: "B2" },
+        { name: "Industrial Security Vocab", file: "industrial-security-vocab.html", category: "Vocabulary", cefr: "B1" },
+        { name: "Innovative Product Design", file: "innovative-product-design.html", category: "Professional", cefr: "B2" },
+        { name: "Lab Equipment Comparison", file: "lab-equipment-comparison.html", category: "Vocabulary", cefr: "B1" },
+        { name: "Meeting Language", file: "meeting-language.html", category: "Professional", cefr: "B1" },
+        { name: "Motor Industry Affixes B1", file: "motor-industry-affixes-b1%20B1.html", category: "Vocabulary", cefr: "B1" },
+        { name: "Negotiation B1", file: "negotiation-b1.html", category: "Professional", cefr: "B1" },
+        { name: "Office A2", file: "office-a2.html", category: "Vocabulary", cefr: "A2" },
+        { name: "Organise A Meeting A2", file: "organise-a-meeting-a2.html", category: "Professional", cefr: "A2" },
+        { name: "Organise A Meeting B1", file: "organise-a-meeting-b1.html", category: "Professional", cefr: "B1" },
+        { name: "Past Simple Quiz A2", file: "past-simple-quiz-a2.html", category: "Grammar", cefr: "A2" },
+        { name: "Pharmacy B2", file: "pharmacy-b2.html", category: "Vocabulary", cefr: "B2" },
+        { name: "Phrasal Verbs at Work B1", file: "phrasal-verbs-at-work-b1.html", category: "Professional", cefr: "B1" },
+        { name: "Phrasal Verbs at Work B1+", file: "phrasal-verbs-at-work-b1%2B.html", category: "Professional", cefr: "B1-B2" },
+        { name: "Placement Test 2", file: "placement-test-2.html", category: "Tests", cefr: "A2-B1-C1" },
+        { name: "Present Continuous Quiz A2", file: "present-continuous-quiz-a2.html", category: "Grammar", cefr: "A2" },
+        { name: "Present Simple Passive", file: "present-simple-passive.html", category: "Grammar", cefr: "B1" },
+        { name: "Product Design", file: "product-design.html", category: "Professional", cefr: "B1" },
+        { name: "Professional Vocabulary B2", file: "professional-vocabulary-b2.html", category: "Vocabulary", cefr: "B2" },
+        { name: "Rhyme Quiz", file: "rhyme-quiz.html", category: "Pronunciation", cefr: "A1" },
+        { name: "Sound Match 1", file: "sound-match-1.html", category: "Pronunciation", cefr: "A1" },
+        { name: "Sound Match 2", file: "sound-match-2.html", category: "Pronunciation", cefr: "A1" },
+        { name: "Supply Planner", file: "supply-planner.html", category: "Professional", cefr: "B2" },
+        { name: "Tech Vocab A2", file: "tech-vocab-a2.html", category: "Vocabulary", cefr: "A2" },
+        { name: "Travel Film Festival", file: "travel-film-festival.html", category: "Reading", cefr: "B1" },
+        { name: "Travelling Phrasal Verbs", file: "travelling-phrasal-verbs.html", category: "Grammar", cefr: "B1" },
+        { name: "UK US Vocab A2", file: "uk-us-vocab-a2.html", category: "Vocabulary", cefr: "A2" },
+        { name: "UK US Vocab B1", file: "uk-us-vocab-b1.html", category: "Vocabulary", cefr: "B1" },
+        { name: "Vocabulary Matchup", file: "vocabulary-matchup.html", category: "Vocabulary", cefr: "B1" },
+        { name: "What's IT For A2", file: "whats-it-for-a2.html", category: "Vocabulary", cefr: "A2" },
+        { name: "Will Vs Going To", file: "will-vs-going-to.html", category: "Grammar", cefr: "A2" }
     ];
 
     let filteredExercises = [...exercises];
+    let currentCefr = "all";
     let currentCategory = "all";
+
+    const cefrLevels = ["A1", "A2", "B1", "B2", "C1", "C1+"];
+    const cefrColors = {
+        "A1": "a1",
+        "A2": "a2",
+        "B1": "b1",
+        "B2": "b2",
+        "C1": "c1",
+        "C1+": "c2"
+    };
 
     // Initialize
     function init() {
-        populateFilters();
+        populateCefrFilters();
+        populateCategories();
         updateStats();
         render();
         setupEventListeners();
     }
 
-    function populateFilters() {
+    function populateCefrFilters() {
+        const filterContainer = document.getElementById('cefrFilters');
+        filterContainer.innerHTML = '';
+        
+        const allBtn = document.createElement('button');
+        allBtn.className = 'filter-btn cefr-btn cefr-a1 active';
+        allBtn.textContent = 'All Levels';
+        allBtn.dataset.cefr = 'all';
+        allBtn.setAttribute('aria-pressed', 'true');
+        allBtn.addEventListener('click', () => filterByCefr(allBtn));
+        filterContainer.appendChild(allBtn);
+
+        cefrLevels.forEach(level => {
+            const btn = document.createElement('button');
+            const colorClass = cefrColors[level];
+            btn.className = `filter-btn cefr-btn cefr-${colorClass}`;
+            btn.textContent = level;
+            btn.dataset.cefr = level;
+            btn.setAttribute('aria-pressed', 'false');
+            btn.addEventListener('click', () => filterByCefr(btn));
+            filterContainer.appendChild(btn);
+        });
+    }
+
+    function populateCategories() {
         const filterContainer = document.getElementById('categoryFilters');
         const categories = ["All", ...new Set(exercises.map(e => e.category))].sort();
         
@@ -487,8 +641,21 @@
         });
     }
 
+    function filterByCefr(btn) {
+        document.querySelectorAll('.cefr-filters .filter-btn').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        
+        currentCefr = btn.dataset.cefr;
+        const searchTerm = document.getElementById('searchInput').value;
+        applyFilters(searchTerm);
+    }
+
     function filterByCategory(btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => {
+        document.querySelectorAll('.category-filters .filter-btn').forEach(b => {
             b.classList.remove('active');
             b.setAttribute('aria-pressed', 'false');
         });
@@ -497,16 +664,17 @@
         
         currentCategory = btn.dataset.category;
         const searchTerm = document.getElementById('searchInput').value;
-        filterExercises(searchTerm);
+        applyFilters(searchTerm);
     }
 
-    function filterExercises(searchTerm) {
+    function applyFilters(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
         
         filteredExercises = exercises.filter(ex => {
             const matchesSearch = !term || ex.name.toLowerCase().includes(term);
+            const matchesCefr = currentCefr === 'all' || ex.cefr.includes(currentCefr);
             const matchesCategory = currentCategory === 'all' || ex.category.toLowerCase() === currentCategory;
-            return matchesSearch && matchesCategory;
+            return matchesSearch && matchesCefr && matchesCategory;
         });
 
         render();
@@ -514,7 +682,7 @@
 
     function setupEventListeners() {
         document.getElementById('searchInput').addEventListener('input', (e) => {
-            filterExercises(e.target.value);
+            applyFilters(e.target.value);
         });
 
         document.getElementById('backToTop').addEventListener('click', () => {
@@ -529,7 +697,17 @@
 
     function updateStats() {
         document.getElementById('totalCount').textContent = exercises.length;
-        document.getElementById('categoryCount').textContent = new Set(exercises.map(e => e.category)).size;
+        document.getElementById('cefr-count').textContent = cefrLevels.length;
+    }
+
+    function getCefrBadgeClass(cefr) {
+        if (cefr.includes('C1+')) return 'badge-c2';
+        if (cefr.includes('C1')) return 'badge-c1';
+        if (cefr.includes('B2')) return 'badge-b2';
+        if (cefr.includes('B1')) return 'badge-b1';
+        if (cefr.includes('A2')) return 'badge-a2';
+        if (cefr.includes('A1')) return 'badge-a1';
+        return 'badge-b1';
     }
 
     function render() {
@@ -541,7 +719,7 @@
 
         if (filteredExercises.length === 0) {
             emptyState.style.display = 'block';
-            resultsInfo.textContent = '';
+            resultsInfo.innerHTML = '';
             document.getElementById('visibleCount').textContent = '0';
             return;
         }
@@ -549,8 +727,12 @@
         emptyState.style.display = 'none';
         document.getElementById('visibleCount').textContent = filteredExercises.length;
 
-        const categoryLabel = currentCategory === 'all' ? 'all exercises' : `${currentCategory} exercises`;
-        resultsInfo.textContent = `Showing ${filteredExercises.length} ${categoryLabel}`;
+        const cefrLabel = currentCefr === 'all' ? 'all levels' : `${currentCefr} level`;
+        const categoryLabel = currentCategory === 'all' ? 'all categories' : `${currentCategory} category`;
+        resultsInfo.innerHTML = `
+            <div>📊 Showing <strong>${filteredExercises.length}</strong> exercises</div>
+            <div>🎯 Filter: <strong>${cefrLabel}</strong> · <strong>${categoryLabel}</strong></div>
+        `;
 
         filteredExercises.forEach(exercise => {
             const link = document.createElement('a');
@@ -559,10 +741,13 @@
             link.setAttribute('role', 'button');
             link.setAttribute('tabindex', '0');
             
+            const badgeClass = getCefrBadgeClass(exercise.cefr);
+            
             link.innerHTML = `
                 <div class="exercise-card-label">
                     <div>${exercise.name}</div>
                     <div class="category-badge">${exercise.category}</div>
+                    <div class="cefr-badge ${badgeClass}">${exercise.cefr}</div>
                 </div>
             `;
 
