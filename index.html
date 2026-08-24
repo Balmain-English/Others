@@ -3,180 +3,582 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Exercises Directory</title>
+    <meta name="description" content="Interactive English Language Learning Exercises - Grammar, Vocabulary, and Professional English Courses">
+    <meta name="theme-color" content="#1c7ed6">
+    <meta property="og:title" content="Interactive Exercises Directory">
+    <meta property="og:description" content="Access our comprehensive collection of English learning exercises">
+    <title>Interactive English Exercises - Grammar & Vocabulary</title>
     <style>
         * {
             box-sizing: border-box;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px;
             color: #212529;
         }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            margin: 0;
+            opacity: 0.95;
+        }
+
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            animation: fadeInUp 0.6s ease-out;
         }
-        .header-section {
-            text-align: center;
+
+        .controls {
+            display: flex;
+            gap: 15px;
             margin-bottom: 30px;
-            border-bottom: 2px solid #f1f3f5;
-            padding-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
         }
-        h1 {
-            color: #1c7ed6;
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            font-weight: 700;
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
         }
-        p {
-            color: #868e96;
-            margin: 0;
-            font-size: 16px;
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            color: #667eea;
+        }
+
+        .filter-btn:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .results-info {
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
         .grid-directory {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
         }
-        .grid-directory a {
+
+        .exercise-card {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 14px 10px;
+            padding: 20px;
             text-decoration: none;
-            background: #e7f5ff;
-            color: #1c7ed6;
-            border: 1px solid #d0ebff;
-            border-radius: 8px;
-            font-size: 13.5px;
+            background: linear-gradient(135deg, #f5f7ff 0%, #eff1ff 100%);
+            color: #667eea;
+            border: 2px solid #e8ecff;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.4;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exercise-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .exercise-card:hover::before {
+            left: 0;
+        }
+
+        .exercise-card:hover {
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+
+        .exercise-card-label {
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            background: rgba(102, 126, 234, 0.15);
+            color: #667eea;
+            border-radius: 12px;
+            margin-top: 6px;
             font-weight: 500;
-            line-height: 1.3;
-            transition: all 0.2s ease-in-out;
-            min-height: 54px;
         }
-        .grid-directory a:hover {
-            background: #1c7ed6;
-            color: #ffffff;
-            border-color: #1c7ed6;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(28, 126, 214, 0.15);
+
+        .exercise-card:hover .category-badge {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
         }
-        @media (max-width: 992px) {
-            .grid-directory {
-                grid-template-columns: repeat(3, 1fr);
-            }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
         }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 4px;
+        }
+
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
             .grid-directory {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+
+            .exercise-card {
+                padding: 15px;
+                min-height: 85px;
+                font-size: 0.85rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: unset;
+            }
+
+            .category-filters {
+                justify-content: center;
             }
         }
-        @media (max-width: 480px) {
-            .grid-directory {
-                grid-template-columns: 1fr;
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
             }
-            body {
-                padding: 20px 10px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Accessibility */
+        .filter-btn:focus,
+        .exercise-card:focus,
+        .search-box input:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            z-index: 999;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+        }
+
+        .back-to-top.show {
+            display: flex;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header-section">
-        <h1>File Directory</h1>
-        <p>Select an exercise to begin:</p>
-    </div>
-
-    <div class="grid-directory" id="exerciseGrid"></div>
+<div class="header">
+    <h1>📚 Interactive Exercises</h1>
+    <p>Master English Grammar, Vocabulary & Professional Communication</p>
 </div>
 
+<div class="container">
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-label">Total Exercises</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="categoryCount">0</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="visibleCount">0</div>
+            <div class="stat-label">Showing</div>
+        </div>
+    </div>
+
+    <div class="controls" role="region" aria-label="Search and Filter Controls">
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search exercises by name..." 
+                aria-label="Search exercises"
+            >
+        </div>
+        <div class="category-filters" id="categoryFilters" role="group" aria-label="Category filters">
+            <button class="filter-btn active" data-category="all" aria-pressed="true">All</button>
+        </div>
+    </div>
+
+    <div class="results-info" id="resultsInfo"></div>
+
+    <nav aria-label="Exercise Directory">
+        <div class="grid-directory" id="exerciseGrid"></div>
+    </nav>
+
+    <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-state-icon">🔍</div>
+        <p>No exercises found matching your search.</p>
+    </div>
+</div>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
+
 <script>
+    // Exercise data with actual filenames from the repository
     const exercises = [
-        "A Few A Little",
-        "Accounting Problem 1",
-        "Accounting Problem 2",
-        "Accounting Problem 3",
-        "Accounting Vocab B1",
-        "Always Still",
-        "Atlantic Crossing Conditionals",
-        "Cars A2",
-        "Conditional Professional B1",
-        "Conditionals A2",
-        "Conditionals B1",
-        "Defining Relative Clauses",
-        "Describing Change B1",
-        "Dimensions Vocab Test",
-        "Electrical Motor Sales Proposal",
-        "Fasteners A2",
-        "Few Little",
-        "Finance B1",
-        "Grammar Challenge A1",
-        "Grammar Challenge A2",
-        "Grammar Challenge B1",
-        "Grammar Challenge B2",
-        "Grammar Challenge Multi 1",
-        "Grammar Challenge Multi 2",
-        "Grammar Challenge Multi 3",
-        "Hotel Vocabulary",
-        "Indias Pharma Revolution",
-        "Industrial Security Vocab",
-        "Innovative Product Design",
-        "Lab Equipment Comparison",
-        "Meeting Language",
-        "Motor Industry Affixes B1",
-        "Negotiation B1",
-        "Office A2",
-        "Organise A Meeting A2",
-        "Organise A Meeting B1",
-        "Pharmacy B2",
-        "Phrasal verbs at work B1",
-        "Phrasal verbs at work B1+",
-        "Placement Test 2",
-        "Present Simple Passive",
-        "Product Design",
-        "Professional Vocabulary B2",
-        "Rhyme Quiz",
-        "Sound Match 1",
-        "Sound Match 2",
-        "Supply Planner",
-        "Tech Vocab A2",
-        "Travel Film Festival",
-        "Travelling Phrasal Verbs",
-        "UK US Vocab A2",
-        "UK US Vocab B1",
-        "Vocabulary Matchup",
-        "Whats IT For A2",
-        "Will Vs Going To"
+        { name: "A Few A Little", file: "a-few-a-little.html", category: "Grammar" },
+        { name: "Accounting Problem 1", file: "accounting-problem-1.html", category: "Professional" },
+        { name: "Accounting Problem 2", file: "accounting-problem-2.html", category: "Professional" },
+        { name: "Accounting Problem 3", file: "accounting-problem-3.html", category: "Professional" },
+        { name: "Accounting Vocab B1", file: "accounting-vocab-b1.html", category: "Vocabulary" },
+        { name: "Always Still", file: "always-still.html", category: "Grammar" },
+        { name: "Atlantic Crossing Conditionals", file: "atlantic-crossing-conditionals.html", category: "Grammar" },
+        { name: "Cars A2", file: "cars-a2.html", category: "Vocabulary" },
+        { name: "Conditional Professional B1", file: "conditional-professional-b1.html", category: "Professional" },
+        { name: "Conditionals A2", file: "conditionals-a2.html", category: "Grammar" },
+        { name: "Conditionals B1", file: "conditionals-b1.html", category: "Grammar" },
+        { name: "Defining Relative Clauses", file: "defining-relative-clauses.html", category: "Grammar" },
+        { name: "Describing Change B1", file: "describing-change-b1.html", category: "Grammar" },
+        { name: "Dimensions Vocab Test", file: "dimensions-vocab-test.html", category: "Vocabulary" },
+        { name: "Electrical Motor Sales Proposal", file: "electrical-motor-sales-proposal.html", category: "Professional" },
+        { name: "Fasteners A2", file: "fasteners-a2.html", category: "Vocabulary" },
+        { name: "Few Little", file: "few-little.html", category: "Grammar" },
+        { name: "Finance B1", file: "finance-b1.html", category: "Professional" },
+        { name: "Grammar Challenge A1", file: "grammar-challenge-a1.html", category: "Grammar" },
+        { name: "Grammar Challenge A2", file: "grammar-challenge-a2.html", category: "Grammar" },
+        { name: "Grammar Challenge B1", file: "grammar-challenge-b1.html", category: "Grammar" },
+        { name: "Grammar Challenge B2", file: "grammar-challenge-b2.html", category: "Grammar" },
+        { name: "Grammar Challenge Multi 1", file: "grammar-challenge-multi-1.html", category: "Grammar" },
+        { name: "Grammar Challenge Multi 2", file: "grammar-challenge-multi-2.html", category: "Grammar" },
+        { name: "Grammar Challenge Multi 3", file: "grammar-challenge-multi-3.html", category: "Grammar" },
+        { name: "Hotel Vocabulary", file: "hotel-vocabulary.html", category: "Vocabulary" },
+        { name: "India's Pharma Revolution", file: "indias-pharma-revolution.html", category: "Reading" },
+        { name: "Industrial Security Vocab", file: "industrial-security-vocab.html", category: "Vocabulary" },
+        { name: "Innovative Product Design", file: "innovative-product-design.html", category: "Professional" },
+        { name: "Lab Equipment Comparison", file: "lab-equipment-comparison.html", category: "Vocabulary" },
+        { name: "Meeting Language", file: "meeting-language.html", category: "Professional" },
+        { name: "Motor Industry Affixes B1", file: "motor-industry-affixes-b1%20B1.html", category: "Vocabulary" },
+        { name: "Negotiation B1", file: "negotiation-b1.html", category: "Professional" },
+        { name: "Office A2", file: "office-a2.html", category: "Vocabulary" },
+        { name: "Organise A Meeting A2", file: "organise-a-meeting-a2.html", category: "Professional" },
+        { name: "Organise A Meeting B1", file: "organise-a-meeting-b1.html", category: "Professional" },
+        { name: "Past Simple Quiz A2", file: "past-simple-quiz-a2.html", category: "Grammar" },
+        { name: "Pharmacy B2", file: "pharmacy-b2.html", category: "Vocabulary" },
+        { name: "Phrasal Verbs at Work B1", file: "phrasal-verbs-at-work-b1.html", category: "Professional" },
+        { name: "Phrasal Verbs at Work B1+", file: "phrasal-verbs-at-work-b1%2B.html", category: "Professional" },
+        { name: "Placement Test 2", file: "placement-test-2.html", category: "Tests" },
+        { name: "Present Continuous Quiz A2", file: "present-continuous-quiz-a2.html", category: "Grammar" },
+        { name: "Present Simple Passive", file: "present-simple-passive.html", category: "Grammar" },
+        { name: "Product Design", file: "product-design.html", category: "Professional" },
+        { name: "Professional Vocabulary B2", file: "professional-vocabulary-b2.html", category: "Vocabulary" },
+        { name: "Rhyme Quiz", file: "rhyme-quiz.html", category: "Pronunciation" },
+        { name: "Sound Match 1", file: "sound-match-1.html", category: "Pronunciation" },
+        { name: "Sound Match 2", file: "sound-match-2.html", category: "Pronunciation" },
+        { name: "Supply Planner", file: "supply-planner.html", category: "Professional" },
+        { name: "Tech Vocab A2", file: "tech-vocab-a2.html", category: "Vocabulary" },
+        { name: "Travel Film Festival", file: "travel-film-festival.html", category: "Reading" },
+        { name: "Travelling Phrasal Verbs", file: "travelling-phrasal-verbs.html", category: "Grammar" },
+        { name: "UK US Vocab A2", file: "uk-us-vocab-a2.html", category: "Vocabulary" },
+        { name: "UK US Vocab B1", file: "uk-us-vocab-b1.html", category: "Vocabulary" },
+        { name: "Vocabulary Matchup", file: "vocabulary-matchup.html", category: "Vocabulary" },
+        { name: "What's IT For A2", file: "whats-it-for-a2.html", category: "Vocabulary" },
+        { name: "Will Vs Going To", file: "will-vs-going-to.html", category: "Grammar" }
     ];
 
-    function generateFilename(title) {
-        return title
-            .toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^a-z0-9-]/g, '') + '.html';
+    let filteredExercises = [...exercises];
+    let currentCategory = "all";
+
+    // Initialize
+    function init() {
+        populateFilters();
+        updateStats();
+        render();
+        setupEventListeners();
     }
 
-    function populateExercises() {
+    function populateFilters() {
+        const filterContainer = document.getElementById('categoryFilters');
+        const categories = ["All", ...new Set(exercises.map(e => e.category))].sort();
+        
+        filterContainer.innerHTML = '';
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = `filter-btn ${cat === 'All' ? 'active' : ''}`;
+            btn.textContent = cat;
+            btn.dataset.category = cat.toLowerCase();
+            btn.setAttribute('aria-pressed', cat === 'All');
+            btn.addEventListener('click', () => filterByCategory(btn));
+            filterContainer.appendChild(btn);
+        });
+    }
+
+    function filterByCategory(btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        
+        currentCategory = btn.dataset.category;
+        const searchTerm = document.getElementById('searchInput').value;
+        filterExercises(searchTerm);
+    }
+
+    function filterExercises(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        
+        filteredExercises = exercises.filter(ex => {
+            const matchesSearch = !term || ex.name.toLowerCase().includes(term);
+            const matchesCategory = currentCategory === 'all' || ex.category.toLowerCase() === currentCategory;
+            return matchesSearch && matchesCategory;
+        });
+
+        render();
+    }
+
+    function setupEventListeners() {
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filterExercises(e.target.value);
+        });
+
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            btn.classList.toggle('show', window.scrollY > 300);
+        });
+    }
+
+    function updateStats() {
+        document.getElementById('totalCount').textContent = exercises.length;
+        document.getElementById('categoryCount').textContent = new Set(exercises.map(e => e.category)).size;
+    }
+
+    function render() {
         const grid = document.getElementById('exerciseGrid');
-        exercises.forEach(exercise => {
+        const emptyState = document.getElementById('emptyState');
+        const resultsInfo = document.getElementById('resultsInfo');
+        
+        grid.innerHTML = '';
+
+        if (filteredExercises.length === 0) {
+            emptyState.style.display = 'block';
+            resultsInfo.textContent = '';
+            document.getElementById('visibleCount').textContent = '0';
+            return;
+        }
+
+        emptyState.style.display = 'none';
+        document.getElementById('visibleCount').textContent = filteredExercises.length;
+
+        const categoryLabel = currentCategory === 'all' ? 'all exercises' : `${currentCategory} exercises`;
+        resultsInfo.textContent = `Showing ${filteredExercises.length} ${categoryLabel}`;
+
+        filteredExercises.forEach(exercise => {
             const link = document.createElement('a');
-            link.href = generateFilename(exercise);
-            link.textContent = exercise;
+            link.href = exercise.file;
+            link.className = 'exercise-card';
+            link.setAttribute('role', 'button');
+            link.setAttribute('tabindex', '0');
+            
+            link.innerHTML = `
+                <div class="exercise-card-label">
+                    <div>${exercise.name}</div>
+                    <div class="category-badge">${exercise.category}</div>
+                </div>
+            `;
+
+            link.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    link.click();
+                }
+            });
+
             grid.appendChild(link);
         });
     }
 
-    document.addEventListener('DOMContentLoaded', populateExercises);
+    // Start the app
+    document.addEventListener('DOMContentLoaded', init);
 </script>
 
 </body>
