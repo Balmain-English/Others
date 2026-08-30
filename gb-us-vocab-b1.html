@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>American & British English – Vocabulary Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --us: #1a3a6b;
+    --gb: #b22234;
+    --us-light: #e8eef8;
+    --gb-light: #f8e8ea;
+    --us-mid: #4a72b0;
+    --gb-mid: #c0536a;
+    --gold: #c8a84b;
+    --cream: #faf8f3;
+    --dark: #1a1a2e;
+    --mid: #4a4a6a;
+    --light: #f0ede6;
+    --correct: #2e7d32;
+    --correct-bg: #e8f5e9;
+    --wrong: #c62828;
+    --wrong-bg: #ffebee;
+    --radius: 10px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--us) 0%, #0d2b55 50%, var(--gb) 100%);
+    color: white;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 80px);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  header h1 span.flag { font-size: 1.4em; }
+  header p.subtitle {
+    font-size: 0.95rem;
+    opacity: 0.82;
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+  }
+  .level-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.8rem;
+    border-radius: 20px;
+    margin-top: 0.7rem;
+    position: relative;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: var(--dark);
+    padding: 0 1rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 1rem 1.4rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: white; }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 2rem 1rem 3rem; max-width: 860px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── HOME ── */
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--mid);
+    margin-bottom: 1.8rem;
+    max-width: 680px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 0.92rem;
+  }
+  .vocab-table thead tr {
+    background: linear-gradient(90deg, var(--us) 50%, var(--gb) 50%);
+    color: white;
+  }
+  .vocab-table thead th {
+    padding: 0.9rem 1.2rem;
+    text-align: left;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+  .vocab-table thead th:first-child { border-right: 3px solid rgba(255,255,255,0.3); }
+  .vocab-table tbody tr:nth-child(even) { background: #f5f3ee; }
+  .vocab-table tbody tr:nth-child(odd) { background: white; }
+  .vocab-table tbody tr:hover { background: #ede8df; }
+  .vocab-table td {
+    padding: 0.7rem 1.2rem;
+    border-bottom: 1px solid #e8e3d8;
+  }
+  .vocab-table td:first-child {
+    border-right: 2px solid #e0dbd0;
+    color: var(--us);
+    font-weight: 600;
+  }
+  .vocab-table td:last-child {
+    color: var(--gb);
+    font-weight: 600;
+  }
+  .flag-icon { margin-right: 0.4rem; }
+
+  /* ── EXERCISE PANELS ── */
+  .ex-header {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.4rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 1rem;
+  }
+  .ex-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--dark);
+  }
+  .ex-header p { font-size: 0.88rem; color: var(--mid); margin-top: 0.2rem; }
+  .score-display {
+    background: var(--dark);
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    white-space: nowrap;
+  }
+
+  /* ── MULTIPLE CHOICE ── */
+  .question-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: none; } }
+  .q-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--mid);
+    margin-bottom: 0.6rem;
+  }
+  .q-prompt {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--dark);
+  }
+  .q-dialect {
+    font-size: 0.82rem;
+    color: var(--mid);
+    margin-bottom: 1.2rem;
+  }
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+  @media(max-width:500px){ .choices { grid-template-columns: 1fr; } }
+  .choice-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--light);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.18s;
+    color: var(--dark);
+  }
+  .choice-btn:hover:not(:disabled) { background: #e8e2d5; border-color: var(--gold); }
+  .choice-btn .opt-label {
+    background: var(--dark);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .choice-btn.correct { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+  .choice-btn.correct .opt-label { background: var(--correct); }
+  .choice-btn.wrong { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); }
+  .choice-btn.wrong .opt-label { background: var(--wrong); }
+  .choice-btn:disabled { cursor: default; }
+  .feedback {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.9rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--correct-bg); color: var(--correct); }
+  .feedback.wrong { background: var(--wrong-bg); color: var(--wrong); }
+
+  /* ── EX 2 SENTENCES ── */
+  .sentence-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeIn 0.3s ease;
+  }
+  .sentence-text { font-size: 1rem; line-height: 1.6; flex: 1; min-width: 200px; }
+  .dialect-btns { display: flex; gap: 0.5rem; flex-shrink: 0; }
+  .dialect-btn {
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: all 0.18s;
+    background: white;
+  }
+  .dialect-btn.us-btn { border-color: var(--us); color: var(--us); }
+  .dialect-btn.us-btn:hover:not(:disabled) { background: var(--us); color: white; }
+  .dialect-btn.gb-btn { border-color: var(--gb); color: var(--gb); }
+  .dialect-btn.gb-btn:hover:not(:disabled) { background: var(--gb); color: white; }
+  .dialect-btn.correct { background: var(--correct); border-color: var(--correct); color: white; }
+  .dialect-btn.wrong { background: var(--wrong); border-color: var(--wrong); color: white; }
+  .dialect-btn:disabled { cursor: default; opacity: 0.85; }
+  .sent-feedback {
+    width: 100%;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.35rem 0.8rem;
+    border-radius: 5px;
+    display: none;
+  }
+  .sent-feedback.show { display: block; }
+  .sent-feedback.correct { background: var(--correct-bg); color: var(--correct); }
+  .sent-feedback.wrong { background: var(--wrong-bg); color: var(--wrong); }
+
+  /* ── EX 3 FILL TABLE ── */
+  .fill-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 0.93rem;
+    margin-bottom: 1.5rem;
+  }
+  .fill-table thead tr {
+    background: linear-gradient(90deg, var(--us) 50%, var(--gb) 50%);
+    color: white;
+  }
+  .fill-table thead th {
+    padding: 0.85rem 1.2rem;
+    text-align: left;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+  }
+  .fill-table thead th:first-child { border-right: 3px solid rgba(255,255,255,0.3); }
+  .fill-table tbody tr:nth-child(even) { background: #f5f3ee; }
+  .fill-table tbody tr:nth-child(odd) { background: white; }
+  .fill-table td {
+    padding: 0.6rem 1.2rem;
+    border-bottom: 1px solid #e8e3d8;
+    vertical-align: middle;
+  }
+  .fill-table td:first-child { border-right: 2px solid #e0dbd0; }
+  .fill-table td.given-us { color: var(--us); font-weight: 600; }
+  .fill-table td.given-gb { color: var(--gb); font-weight: 600; }
+  .fill-input {
+    border: 2px solid #d0ccc0;
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 180px;
+    transition: border-color 0.2s;
+    background: var(--cream);
+    color: var(--dark);
+  }
+  .fill-input:focus { outline: none; border-color: var(--gold); }
+  .fill-input.correct { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 600; }
+  .fill-input.wrong { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); }
+  .fill-input:disabled { cursor: default; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-block;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--dark);
+    color: var(--gold);
+  }
+  .btn-primary:hover { background: #2e2e4e; transform: translateY(-1px); }
+  .btn-reset {
+    background: var(--light);
+    color: var(--mid);
+  }
+  .btn-reset:hover { background: #e0dbd0; }
+  .btn-check {
+    background: var(--us);
+    color: white;
+  }
+  .btn-check:hover { background: #0d2b55; }
+  .action-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.2rem; }
+
+  /* ── FINAL SCORE ── */
+  .final-score {
+    background: white;
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    margin-top: 1rem;
+    display: none;
+  }
+  .final-score.show { display: block; }
+  .final-score .big-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .final-score .big-score span { color: var(--gold); }
+  .final-score p { color: var(--mid); margin-top: 0.5rem; font-size: 0.95rem; }
+  .stars { font-size: 2rem; margin-top: 0.5rem; }
+
+  /* NOTICE */
+  .notice {
+    background: var(--us-light);
+    border-left: 4px solid var(--us-mid);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.88rem;
+    color: var(--us);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="flag">🇺🇸</span> American & British English <span class="flag">🇬🇧</span></h1>
+  <p class="subtitle">Vocabulary Exercises</p>
+  <div class="level-badge">Level A2 / B1</div>
+</header>
+
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="showPanel('home')">📋 Word List</button>
+  <button class="tab-btn" onclick="showPanel('ex1')">Exercise 1 – Multiple Choice</button>
+  <button class="tab-btn" onclick="showPanel('ex2')">Exercise 2 – US or GB?</button>
+  <button class="tab-btn" onclick="showPanel('ex3')">Exercise 3 – Fill the Gap</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HOME / WORD LIST
+═══════════════════════════════════════════ -->
+<div id="home" class="panel active">
+  <p class="intro-text">
+    American and British English share the same grammar but use different words for many everyday things.
+    Study the 24 word pairs below, then try the three exercises to test your knowledge!
+  </p>
+  <h2 class="section-title">📚 The 24 Word Pairs</h2>
+  <table class="vocab-table">
+    <thead>
+      <tr>
+        <th><span class="flag-icon">🇺🇸</span> American English</th>
+        <th><span class="flag-icon">🇬🇧</span> British English</th>
+      </tr>
+    </thead>
+    <tbody id="home-table-body"></tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXERCISE 1 – MULTIPLE CHOICE
+═══════════════════════════════════════════ -->
+<div id="ex1" class="panel">
+  <div class="ex-header">
+    <div>
+      <h2>Exercise 1 – Multiple Choice</h2>
+      <p>Choose the correct American or British equivalent for each word.</p>
+    </div>
+    <div class="score-display" id="ex1-score">0 / 20</div>
+  </div>
+  <div class="notice">💡 The word shown is either American or British English. Choose the correct equivalent from the four options.</div>
+  <div id="ex1-questions"></div>
+  <div class="final-score" id="ex1-final">
+    <div class="big-score" id="ex1-big">0 <span>/ 20</span></div>
+    <div class="stars" id="ex1-stars"></div>
+    <p id="ex1-msg"></p>
+    <div class="action-row" style="justify-content:center; margin-top:1.2rem">
+      <button class="btn btn-primary" onclick="initEx1()">Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXERCISE 2 – US OR GB?
+═══════════════════════════════════════════ -->
+<div id="ex2" class="panel">
+  <div class="ex-header">
+    <div>
+      <h2>Exercise 2 – American or British?</h2>
+      <p>Read each sentence and decide: is it American English or British English?</p>
+    </div>
+    <div class="score-display" id="ex2-score">0 / 20</div>
+  </div>
+  <div class="notice">💡 Look carefully at the vocabulary. Click <strong>🇺🇸 US</strong> or <strong>🇬🇧 GB</strong> to answer.</div>
+  <div id="ex2-questions"></div>
+  <div class="final-score" id="ex2-final">
+    <div class="big-score" id="ex2-big">0 <span>/ 20</span></div>
+    <div class="stars" id="ex2-stars"></div>
+    <p id="ex2-msg"></p>
+    <div class="action-row" style="justify-content:center; margin-top:1.2rem">
+      <button class="btn btn-primary" onclick="initEx2()">Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXERCISE 3 – FILL THE GAP TABLE
+═══════════════════════════════════════════ -->
+<div id="ex3" class="panel">
+  <div class="ex-header">
+    <div>
+      <h2>Exercise 3 – Fill the Gap</h2>
+      <p>Type the missing American or British word in each empty cell.</p>
+    </div>
+    <div class="score-display" id="ex3-score">— / 24</div>
+  </div>
+  <div class="notice">💡 Half the words are missing from each side. Type the correct equivalent. Spelling matters, but capital letters do not.</div>
+  <table class="fill-table">
+    <thead>
+      <tr>
+        <th><span>🇺🇸</span> American English</th>
+        <th><span>🇬🇧</span> British English</th>
+      </tr>
+    </thead>
+    <tbody id="ex3-body"></tbody>
+  </table>
+  <div class="action-row">
+    <button class="btn btn-check" onclick="checkEx3()">Check Answers</button>
+    <button class="btn btn-reset" onclick="initEx3()">Reset</button>
+  </div>
+  <div class="final-score" id="ex3-final">
+    <div class="big-score" id="ex3-big">0 <span>/ 24</span></div>
+    <div class="stars" id="ex3-stars"></div>
+    <p id="ex3-msg"></p>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════
+// DATA
+// ═══════════════════════════════
+const vocab = [
+  { us: "apartment",    gb: "flat" },
+  { us: "elevator",     gb: "lift" },
+  { us: "trash can",    gb: "bin" },
+  { us: "subway",       gb: "underground" },
+  { us: "truck",        gb: "lorry" },
+  { us: "gas",          gb: "petrol" },
+  { us: "faucet",       gb: "tap" },
+  { us: "cookie",       gb: "biscuit" },
+  { us: "candy",        gb: "sweets" },
+  { us: "diaper",       gb: "nappy" },
+  { us: "vacation",     gb: "holiday" },
+  { us: "drugstore",    gb: "chemist" },
+  { us: "sidewalk",     gb: "pavement" },
+  { us: "parking lot",  gb: "car park" },
+  { us: "cell phone",   gb: "mobile" },
+  { us: "zip code",     gb: "postcode" },
+  { us: "soccer",       gb: "football" },
+  { us: "french fries", gb: "chips" },
+  { us: "eraser",       gb: "rubber" },
+  { us: "fall",         gb: "autumn" },
+  { us: "closet",       gb: "wardrobe" },
+  { us: "attorney",     gb: "solicitor" },
+  { us: "check",        gb: "bill" },       // restaurant bill
+  { us: "band-aid",     gb: "plaster" },
+];
+
+// ═══════════════════════════════
+// UTILS
+// ═══════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn')[['home','ex1','ex2','ex3'].indexOf(id)].classList.add('active');
+}
+
+function stars(n, max) {
+  const pct = n / max;
+  if (pct >= 0.9) return '⭐⭐⭐';
+  if (pct >= 0.7) return '⭐⭐';
+  return '⭐';
+}
+function msg(n, max) {
+  const pct = n / max;
+  if (pct >= 0.9) return 'Excellent work! You really know your American and British vocabulary!';
+  if (pct >= 0.7) return 'Good job! A little more practice and you\'ll master it.';
+  if (pct >= 0.5) return 'Not bad! Review the word list and try again.';
+  return 'Keep studying the word list — you\'ll improve with practice!';
+}
+
+// ═══════════════════════════════
+// HOME TABLE
+// ═══════════════════════════════
+(function buildHome() {
+  const tbody = document.getElementById('home-table-body');
+  vocab.forEach(v => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${v.us}</td><td>${v.gb}</td>`;
+    tbody.appendChild(tr);
+  });
+})();
+
+// ═══════════════════════════════════════════════════════
+// EXERCISE 1 – MULTIPLE CHOICE
+// ═══════════════════════════════════════════════════════
+// Correct answer must be randomly and evenly distributed
+// across A B C D (positions 0-3) — 5 of each.
+// Headwords from either list, no more than 3 in a row from same side.
+// ═══════════════════════════════════════════════════════
+
+function initEx1() {
+  const container = document.getElementById('ex1-questions');
+  container.innerHTML = '';
+  document.getElementById('ex1-final').classList.remove('show');
+  document.getElementById('ex1-score').textContent = '0 / 20';
+
+  // Build 20 question objects
+  const questions = buildEx1Questions();
+  questions.forEach((q, idx) => renderEx1Question(q, idx, container));
+  window._ex1 = { questions, answered: 0, score: 0 };
+}
+
+function buildEx1Questions() {
+  // 20 questions: pick pairs (with replacement ok, but let's use pairs sensibly)
+  // Each question: headword from US or GB side, correct answer is the other side.
+  // Constraint: no more than 3 in a row from same dialect side.
+  // Correct answer positions: evenly distributed 5x A, 5x B, 5x C, 5x D.
+
+  // Prepare 20 items: 10 from US side (answer in GB), 10 from GB side (answer in US)
+  // but shuffled so no >3 consecutive same side.
+  const poolUS = shuffle(vocab).slice(0, 10).map(v => ({ headword: v.us, headDialect: 'US', answer: v.gb }));
+  const poolGB = shuffle(vocab).slice(0, 10).map(v => ({ headword: v.gb, headDialect: 'GB', answer: v.us }));
+
+  // Interleave so no run > 3
+  const items = [];
+  let usIdx = 0, gbIdx = 0;
+  let lastDialect = null, runLen = 0;
+
+  while (usIdx < 10 || gbIdx < 10) {
+    let pickUS = usIdx < 10;
+    let pickGB = gbIdx < 10;
+
+    if (lastDialect === 'US' && runLen >= 3) pickUS = false;
+    if (lastDialect === 'GB' && runLen >= 3) pickGB = false;
+
+    let choice;
+    if (pickUS && pickGB) choice = Math.random() < 0.5 ? 'US' : 'GB';
+    else if (pickUS) choice = 'US';
+    else choice = 'GB';
+
+    if (choice === 'US') { items.push(poolUS[usIdx++]); }
+    else { items.push(poolGB[gbIdx++]); }
+
+    if (choice === lastDialect) runLen++;
+    else { lastDialect = choice; runLen = 1; }
+  }
+
+  // Assign correct position: evenly 5× each of A B C D
+  const positions = shuffle([0,0,0,0,0, 1,1,1,1,1, 2,2,2,2,2, 3,3,3,3,3]);
+
+  return items.map((item, i) => {
+    const correctPos = positions[i];
+    const otherSide = item.headDialect === 'US' ? vocab.map(v => v.gb) : vocab.map(v => v.us);
+
+    // pick 3 distractors (words from same side as answer, not the correct one)
+    let pool = otherSide.filter(w => w !== item.answer);
+    const distractors = shuffle(pool).slice(0, 3);
+
+    const opts = [...distractors];
+    opts.splice(correctPos, 0, item.answer);
+
+    return { ...item, opts, correctPos };
+  });
+}
+
+function renderEx1Question(q, idx, container) {
+  const labels = ['A','B','C','D'];
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.innerHTML = `
+    <div class="q-number">Question ${idx+1}</div>
+    <div class="q-prompt">${q.headword}</div>
+    <div class="q-dialect">${q.headDialect === 'US' ? '🇺🇸 American English' : '🇬🇧 British English'} — choose the ${q.headDialect === 'US' ? '🇬🇧 British' : '🇺🇸 American'} equivalent</div>
+    <div class="choices" id="ex1-choices-${idx}">
+      ${q.opts.map((opt, oi) => `
+        <button class="choice-btn" onclick="answerEx1(${idx}, ${oi})" id="ex1-c-${idx}-${oi}">
+          <span class="opt-label">${labels[oi]}</span>${opt}
+        </button>
+      `).join('')}
+    </div>
+    <div class="feedback" id="ex1-fb-${idx}"></div>
+  `;
+  container.appendChild(card);
+}
+
+function answerEx1(qIdx, chosen) {
+  const q = window._ex1.questions[qIdx];
+  if (document.getElementById(`ex1-c-${qIdx}-0`).disabled) return;
+
+  const correct = q.correctPos === chosen;
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`ex1-c-${qIdx}-${i}`);
+    btn.disabled = true;
+    if (i === q.correctPos) btn.classList.add('correct');
+    else if (i === chosen && !correct) btn.classList.add('wrong');
+  }
+  const fb = document.getElementById(`ex1-fb-${qIdx}`);
+  if (correct) {
+    fb.textContent = '✓ Correct!';
+    fb.className = 'feedback show correct';
+    window._ex1.score++;
+  } else {
+    fb.textContent = `✗ Not quite. The correct answer is "${q.answer}".`;
+    fb.className = 'feedback show wrong';
+  }
+  window._ex1.answered++;
+  document.getElementById('ex1-score').textContent = `${window._ex1.score} / 20`;
+  if (window._ex1.answered === 20) showEx1Final();
+}
+
+function showEx1Final() {
+  const s = window._ex1.score;
+  document.getElementById('ex1-big').innerHTML = `${s} <span>/ 20</span>`;
+  document.getElementById('ex1-stars').textContent = stars(s, 20);
+  document.getElementById('ex1-msg').textContent = msg(s, 20);
+  document.getElementById('ex1-final').classList.add('show');
+}
+
+// ═══════════════════════════════════════════════════════
+// EXERCISE 2 – US or GB?
+// ═══════════════════════════════════════════════════════
+const ex2Sentences = [
+  // US sentences
+  { text: "I need to stop at the <strong>drugstore</strong> to pick up some <strong>band-aids</strong>.", dialect: 'US' },
+  { text: "She took the <strong>elevator</strong> up to her <strong>apartment</strong> on the 12th floor.", dialect: 'US' },
+  { text: "We put the <strong>trash</strong> in the <strong>trash can</strong> outside.", dialect: 'US' },
+  { text: "He filled up his <strong>truck</strong> with <strong>gas</strong> before the long drive.", dialect: 'US' },
+  { text: "The kids ate <strong>cookies</strong> and <strong>candy</strong> after school.", dialect: 'US' },
+  { text: "Don't forget your <strong>cell phone</strong> – I need to send you the <strong>zip code</strong>.", dialect: 'US' },
+  { text: "We walked along the <strong>sidewalk</strong> to the <strong>parking lot</strong>.", dialect: 'US' },
+  { text: "The <strong>attorney</strong> asked the waiter for the <strong>check</strong>.", dialect: 'US' },
+  { text: "She put her clothes away in the <strong>closet</strong> and kicked <strong>fall</strong> leaves off the <strong>faucet</strong>... wait — off the <strong>sidewalk</strong>.", dialect: 'US' },
+  { text: "They watched <strong>soccer</strong> and ordered <strong>french fries</strong> and a soda.", dialect: 'US' },
+  // GB sentences
+  { text: "She called her <strong>mobile</strong> and asked him to check the <strong>postcode</strong>.", dialect: 'GB' },
+  { text: "The baby's <strong>nappy</strong> needs changing — there's a clean one in the <strong>wardrobe</strong>.", dialect: 'GB' },
+  { text: "We took the <strong>underground</strong> and got off near the <strong>chemist</strong>.", dialect: 'GB' },
+  { text: "He asked the waiter for the <strong>bill</strong> and put a <strong>plaster</strong> on his cut finger.", dialect: 'GB' },
+  { text: "Put the rubbish in the <strong>bin</strong> and turn off the <strong>tap</strong>.", dialect: 'GB' },
+  { text: "The <strong>lorry</strong> blocked the road, so we parked in the <strong>car park</strong>.", dialect: 'GB' },
+  { text: "She went on <strong>holiday</strong> in <strong>autumn</strong> and loved the colours.", dialect: 'GB' },
+  { text: "Could I borrow your <strong>rubber</strong>? I need to correct my work.", dialect: 'GB' },
+  { text: "My <strong>flat</strong> is just a short walk from the <strong>lift</strong>.", dialect: 'GB' },
+  { text: "He had <strong>chips</strong> and a <strong>biscuit</strong> for his lunch on the <strong>pavement</strong> outside.", dialect: 'GB' },
+];
+
+function initEx2() {
+  const container = document.getElementById('ex2-questions');
+  container.innerHTML = '';
+  document.getElementById('ex2-final').classList.remove('show');
+  document.getElementById('ex2-score').textContent = '0 / 20';
+
+  const qs = shuffle(ex2Sentences);
+  qs.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'sentence-card';
+    card.innerHTML = `
+      <div class="q-number" style="width:100%; font-size:0.72rem; color:var(--mid); font-weight:700; text-transform:uppercase; letter-spacing:0.07em">Sentence ${idx+1}</div>
+      <div class="sentence-text">${q.text}</div>
+      <div class="dialect-btns">
+        <button class="dialect-btn us-btn" onclick="answerEx2(${idx}, 'US', this)" id="ex2-us-${idx}">🇺🇸 US</button>
+        <button class="dialect-btn gb-btn" onclick="answerEx2(${idx}, 'GB', this)" id="ex2-gb-${idx}">🇬🇧 GB</button>
+      </div>
+      <div class="sent-feedback" id="ex2-fb-${idx}"></div>
+    `;
+    container.appendChild(card);
+  });
+  window._ex2 = { sentences: qs, answered: 0, score: 0 };
+}
+
+function answerEx2(idx, chosen, btn) {
+  const q = window._ex2.sentences[idx];
+  if (document.getElementById(`ex2-us-${idx}`).disabled) return;
+  document.getElementById(`ex2-us-${idx}`).disabled = true;
+  document.getElementById(`ex2-gb-${idx}`).disabled = true;
+
+  const correct = chosen === q.dialect;
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = document.getElementById(`ex2-fb-${idx}`);
+  if (correct) {
+    fb.textContent = `✓ Correct! This sentence uses ${q.dialect === 'US' ? 'American' : 'British'} English.`;
+    fb.className = 'sent-feedback show correct';
+    window._ex2.score++;
+  } else {
+    const other = q.dialect === 'US' ? document.getElementById(`ex2-us-${idx}`) : document.getElementById(`ex2-gb-${idx}`);
+    other.classList.add('correct');
+    fb.textContent = `✗ Not quite. This is ${q.dialect === 'US' ? 'American 🇺🇸' : 'British 🇬🇧'} English.`;
+    fb.className = 'sent-feedback show wrong';
+  }
+  window._ex2.answered++;
+  document.getElementById('ex2-score').textContent = `${window._ex2.score} / 20`;
+  if (window._ex2.answered === 20) {
+    const s = window._ex2.score;
+    document.getElementById('ex2-big').innerHTML = `${s} <span>/ 20</span>`;
+    document.getElementById('ex2-stars').textContent = stars(s, 20);
+    document.getElementById('ex2-msg').textContent = msg(s, 20);
+    document.getElementById('ex2-final').classList.add('show');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// EXERCISE 3 – FILL THE GAP TABLE
+// ═══════════════════════════════════════════════════════
+// 24 rows, half US missing (12), half GB missing (12).
+// Decide which side is missing randomly per row, but equal counts.
+// ═══════════════════════════════════════════════════════
+
+function initEx3() {
+  const tbody = document.getElementById('ex3-body');
+  tbody.innerHTML = '';
+  document.getElementById('ex3-final').classList.remove('show');
+  document.getElementById('ex3-score').textContent = '— / 24';
+
+  // 12 hide US, 12 hide GB
+  const hideFlags = shuffle([...Array(12).fill('us'), ...Array(12).fill('gb')]);
+
+  window._ex3 = { rows: [] };
+
+  vocab.forEach((v, i) => {
+    const hideUS = hideFlags[i] === 'us';
+    const tr = document.createElement('tr');
+
+    if (hideUS) {
+      tr.innerHTML = `
+        <td><input class="fill-input" id="ex3-in-${i}" type="text" placeholder="type here…" autocomplete="off" autocorrect="off" spellcheck="false"></td>
+        <td class="given-gb">${v.gb}</td>
+      `;
+      window._ex3.rows.push({ idx: i, answer: v.us, side: 'us' });
+    } else {
+      tr.innerHTML = `
+        <td class="given-us">${v.us}</td>
+        <td><input class="fill-input" id="ex3-in-${i}" type="text" placeholder="type here…" autocomplete="off" autocorrect="off" spellcheck="false"></td>
+      `;
+      window._ex3.rows.push({ idx: i, answer: v.gb, side: 'gb' });
+    }
+    tbody.appendChild(tr);
+  });
+}
+
+function checkEx3() {
+  let score = 0;
+  window._ex3.rows.forEach(row => {
+    const inp = document.getElementById(`ex3-in-${row.idx}`);
+    if (inp.disabled) return;
+    const val = inp.value.trim().toLowerCase();
+    const ans = row.answer.toLowerCase();
+    inp.disabled = true;
+    if (val === ans) {
+      inp.classList.add('correct');
+      score++;
+    } else {
+      inp.classList.add('wrong');
+      inp.value = inp.value + ' → ' + row.answer;
+    }
+  });
+  document.getElementById('ex3-score').textContent = `${score} / 24`;
+  const s = score;
+  document.getElementById('ex3-big').innerHTML = `${s} <span>/ 24</span>`;
+  document.getElementById('ex3-stars').textContent = stars(s, 24);
+  document.getElementById('ex3-msg').textContent = msg(s, 24);
+  document.getElementById('ex3-final').classList.add('show');
+}
+
+// ═══════════════════════════════
+// INIT ALL
+// ═══════════════════════════════
+initEx1();
+initEx2();
+initEx3();
+</script>
+</body>
+</html>
