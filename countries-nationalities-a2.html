@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Countries &amp; Nationalities Quiz — B1 English</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f7f7f5;
+    --bg-hover: #f0efeb;
+    --text: #1a1a18;
+    --text-muted: #6b6b67;
+    --border: rgba(0,0,0,0.12);
+    --border-strong: rgba(0,0,0,0.22);
+    --accent: #185FA5;
+    --correct-bg: #E1F5EE;
+    --correct-border: #1D9E75;
+    --correct-text: #085041;
+    --wrong-bg: #FAECE7;
+    --wrong-border: #D85A30;
+    --wrong-text: #4A1B0C;
+    --revealed-bg: #FAEEDA;
+    --revealed-border: #BA7517;
+    --revealed-text: #633806;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1e1e1c;
+      --bg-alt: #282825;
+      --bg-hover: #313130;
+      --text: #e8e8e4;
+      --text-muted: #9a9a96;
+      --border: rgba(255,255,255,0.12);
+      --border-strong: rgba(255,255,255,0.22);
+      --accent: #85B7EB;
+      --correct-bg: #04342C;
+      --correct-border: #1D9E75;
+      --correct-text: #9FE1CB;
+      --wrong-bg: #4A1B0C;
+      --wrong-border: #D85A30;
+      --wrong-text: #F5C4B3;
+      --revealed-bg: #412402;
+      --revealed-border: #EF9F27;
+      --revealed-text: #FAC775;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg-alt);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--border);
+    padding: 2rem;
+  }
+
+  .quiz-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-title { font-size: 22px; font-weight: 500; color: var(--text); }
+  .quiz-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  button {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 7px 14px;
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border-strong);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  button:hover { background: var(--bg-hover); }
+  button.primary { background: var(--bg-alt); font-weight: 500; }
+
+  .score-bar {
+    display: none;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+  .score-bar strong { color: var(--text); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    table-layout: fixed;
+  }
+
+  thead th {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    border-bottom: 0.5px solid var(--border);
+    text-align: left;
+  }
+  thead th:first-child { width: 50%; }
+
+  td {
+    padding: 6px 8px;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: middle;
+  }
+  td.given {
+    font-weight: 500;
+    color: var(--text);
+    padding: 7px 12px;
+  }
+  td.input-cell { padding: 4px 6px; }
+
+  tr:nth-child(even) td { background: var(--bg-alt); }
+  tr:nth-child(even) td.input-cell input { background: var(--bg-alt); }
+
+  input[type=text] {
+    width: 100%;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 6px 9px;
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input[type=text]:focus { border-color: var(--accent); }
+  input.correct { border-color: var(--correct-border); background: var(--correct-bg); color: var(--correct-text); }
+  input.wrong   { border-color: var(--wrong-border);   background: var(--wrong-bg);   color: var(--wrong-text); }
+  input.revealed{ border-color: var(--revealed-border);background: var(--revealed-bg);color: var(--revealed-text); }
+
+  .result-block {
+    display: none;
+    margin-top: 1.25rem;
+    padding: 12px 16px;
+    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--border);
+    background: var(--bg-alt);
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .result-block.show { display: block; }
+  .result-block strong { color: var(--text); }
+
+  .tip {
+    margin-top: 1rem;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .container { border: none; padding: 1rem; max-width: none; }
+    .btn-row, .score-bar, .result-block, .tip { display: none !important; }
+    input[type=text] { border: 0.5px solid #999; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">
+    Countries and nationalities quiz — fill in the blank for each row
+  </h1>
+  <div class="quiz-header">
+    <div>
+      <div class="quiz-title">Countries &amp; Nationalities</div>
+      <div class="quiz-subtitle">Fill in the blank column — 25 rows, B1 level</div>
+    </div>
+    <div class="btn-row">
+      <button class="primary" onclick="newQuiz()">&#8635; New quiz</button>
+      <button onclick="checkAll()">&#10003; Check answers</button>
+      <button onclick="revealAll()">&#9737; Reveal all</button>
+    </div>
+  </div>
+
+  <div class="score-bar" id="scoreBar">
+    Score: <strong id="scoreNum">0 / 25</strong>
+  </div>
+
+  <table id="quizTable">
+    <thead>
+      <tr><th>Country</th><th>Nationality / adjective</th></tr>
+    </thead>
+    <tbody id="quizBody"></tbody>
+  </table>
+
+  <div class="result-block" id="resultBlock"></div>
+  <p class="tip">Tip: Answers are not case-sensitive. Press Enter to move to the next row.</p>
+</div>
+
+<script>
+"use strict";
+
+/* ── Master data: [country, nationality] ── */
+const ALL_PAIRS = [
+  /* EU member states (27) */
+  ["Austria","Austrian"],
+  ["Belgium","Belgian"],
+  ["Bulgaria","Bulgarian"],
+  ["Croatia","Croatian"],
+  ["Cyprus","Cypriot"],
+  ["Czech Republic","Czech"],
+  ["Denmark","Danish"],
+  ["Estonia","Estonian"],
+  ["Finland","Finnish"],
+  ["France","French"],
+  ["Germany","German"],
+  ["Greece","Greek"],
+  ["Hungary","Hungarian"],
+  ["Ireland","Irish"],
+  ["Italy","Italian"],
+  ["Latvia","Latvian"],
+  ["Lithuania","Lithuanian"],
+  ["Luxembourg","Luxembourgish"],
+  ["Malta","Maltese"],
+  ["Netherlands","Dutch"],
+  ["Poland","Polish"],
+  ["Portugal","Portuguese"],
+  ["Romania","Romanian"],
+  ["Slovakia","Slovak"],
+  ["Slovenia","Slovenian"],
+  ["Spain","Spanish"],
+  ["Sweden","Swedish"],
+  /* UK nations */
+  ["Great Britain","British"],
+  ["England","English"],
+  ["Scotland","Scottish"],
+  ["Wales","Welsh"],
+  /* Asia */
+  ["Japan","Japanese"],
+  ["China","Chinese"],
+  ["South Korea","South Korean"],
+  ["Russia","Russian"],
+  ["India","Indian"],
+  ["Thailand","Thai"],
+  ["Indonesia","Indonesian"],
+  ["Vietnam","Vietnamese"],
+  /* Middle East */
+  ["Saudi Arabia","Saudi"],
+  ["United Arab Emirates","Emirati"],
+  ["Iran","Iranian"],
+  /* Africa */
+  ["Egypt","Egyptian"],
+  ["Morocco","Moroccan"],
+  ["Ethiopia","Ethiopian"],
+  ["South Africa","South African"],
+  ["Nigeria","Nigerian"],
+  ["Kenya","Kenyan"],
+  /* Americas */
+  ["Argentina","Argentine"],
+  ["Brazil","Brazilian"],
+  ["Chile","Chilean"],
+  ["Mexico","Mexican"],
+  ["Canada","Canadian"],
+  ["United States","American"],
+  /* Europe non-EU */
+  ["Norway","Norwegian"],
+  ["Switzerland","Swiss"],
+  ["Turkey","Turkish"],
+  /* Oceania */
+  ["Australia","Australian"],
+  /* South Asia */
+  ["Pakistan","Pakistani"]
+];
+
+/* Accepted alternates keyed by lowercase correct answer */
+const ALTERNATES = {
+  "argentine":       ["argentinian"],
+  "luxembourgish":   ["luxembourger"],
+  "dutch":           ["netherlandish"],
+  "czech":           ["czechoslovakian"],
+  "south korean":    ["korean"],
+  "american":        ["us american","u.s. american","united states"],
+  "emirati":         ["uae"],
+  "saudi":           ["saudi arabian"],
+  "south african":   ["south-african"],
+  "slovenian":       ["slovene"],
+  "slovak":          ["slovakian"]
+};
+
+/* Fisher-Yates in-place shuffle, returns new array */
+function fisherYates(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function normalise(s) {
+  return String(s).trim().toLowerCase().replace(/[^a-z ]/g, '').replace(/\s+/g,' ');
+}
+
+function isCorrect(userInput, correctAnswer) {
+  const u = normalise(userInput);
+  const c = normalise(correctAnswer);
+  if (u === c) return true;
+  const alts = ALTERNATES[c] || [];
+  return alts.some(function(a) { return normalise(a) === u; });
+}
+
+/* Quiz state */
+var quizRows = [];
+
+function newQuiz() {
+  document.getElementById('resultBlock').classList.remove('show');
+  document.getElementById('scoreBar').style.display = 'none';
+  var shuffled = fisherYates(ALL_PAIRS).slice(0, 25);
+  quizRows = shuffled.map(function(pair, i) {
+    return { country: pair[0], nationality: pair[1], showCountry: (i % 2 === 0) };
+  });
+  render();
+}
+
+function render() {
+  var tbody = document.getElementById('quizBody');
+  tbody.innerHTML = '';
+  quizRows.forEach(function(row, idx) {
+    var tr = document.createElement('tr');
+    if (row.showCountry) {
+      tr.innerHTML =
+        '<td class="given">' + escHtml(row.country) + '</td>' +
+        '<td class="input-cell"><input type="text" id="inp_' + idx + '" placeholder="nationality\u2026" autocomplete="off" autocorrect="off" spellcheck="false" /></td>';
+    } else {
+      tr.innerHTML =
+        '<td class="input-cell"><input type="text" id="inp_' + idx + '" placeholder="country\u2026" autocomplete="off" autocorrect="off" spellcheck="false" /></td>' +
+        '<td class="given">' + escHtml(row.nationality) + '</td>';
+    }
+    tbody.appendChild(tr);
+    /* Enter key moves focus */
+    (function(i) {
+      var inp = document.getElementById('inp_' + i);
+      if (inp) {
+        inp.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            var next = document.getElementById('inp_' + (i + 1));
+            if (next) { next.focus(); } else { checkAll(); }
+          }
+        });
+      }
+    })(idx);
+  });
+  /* Focus first input */
+  var first = document.getElementById('inp_0');
+  if (first) first.focus();
+}
+
+function checkAll() {
+  var correct = 0, filled = 0;
+  quizRows.forEach(function(row, idx) {
+    var inp = document.getElementById('inp_' + idx);
+    if (!inp) return;
+    var val = inp.value.trim();
+    if (val === '') {
+      inp.classList.remove('correct','wrong','revealed');
+      return;
+    }
+    filled++;
+    var answer = row.showCountry ? row.nationality : row.country;
+    if (isCorrect(val, answer)) {
+      inp.classList.remove('wrong','revealed');
+      inp.classList.add('correct');
+      correct++;
+    } else {
+      inp.classList.remove('correct','revealed');
+      inp.classList.add('wrong');
+    }
+  });
+  var sb = document.getElementById('scoreBar');
+  sb.style.display = 'block';
+  document.getElementById('scoreNum').textContent = correct + ' / 25 (checked ' + filled + ' answers)';
+  var rb = document.getElementById('resultBlock');
+  if (correct === 25 && filled === 25) {
+    rb.innerHTML = '<strong>Perfect score!</strong> All 25 correct. Click "New quiz" for a fresh set.';
+  } else if (filled === 25) {
+    rb.innerHTML = '<strong>' + correct + ' out of 25.</strong> Rows highlighted in red need another look. Click "Reveal all" to see the answers.';
+  } else {
+    rb.innerHTML = '<strong>' + correct + ' correct so far.</strong> Complete all rows and check again.';
+  }
+  rb.classList.add('show');
+}
+
+function revealAll() {
+  quizRows.forEach(function(row, idx) {
+    var inp = document.getElementById('inp_' + idx);
+    if (!inp) return;
+    var answer = row.showCountry ? row.nationality : row.country;
+    var val = inp.value.trim();
+    if (val === '' || !isCorrect(val, answer)) {
+      inp.value = answer;
+      inp.classList.remove('correct','wrong');
+      inp.classList.add('revealed');
+    }
+  });
+  var rb = document.getElementById('resultBlock');
+  rb.innerHTML = 'All answers revealed (shown in amber). Click <strong>New quiz</strong> for a new shuffled set.';
+  rb.classList.add('show');
+}
+
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/* Kick off */
+newQuiz();
+</script>
+</body>
+</html>

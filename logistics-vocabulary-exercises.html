@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logistics Vocabulary Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cover:#26415A;
+    --cover-dark:#192C3E;
+    --paper:#E8D9BB;
+    --paper-soft:#F1E6CE;
+    --paper-line:#CBB98F;
+    --ink:#2B2A28;
+    --ink-soft:#5B5347;
+    --bad:#B23A2E;
+    --good:#2F6F4E;
+    --accent:#D6742B;
+    --shadow:0 10px 30px rgba(25,44,62,.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at top, #33526E 0%, var(--cover) 45%, var(--cover-dark) 100%);
+    min-height:100vh;
+    font-family:'IBM Plex Sans',sans-serif;
+    color:var(--ink);
+    padding:28px 16px 60px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .workbook{width:100%;max-width:880px;}
+
+  /* ---------- HEADER ---------- */
+  .book-header{
+    color:var(--paper);
+    padding:6px 14px 22px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    border-bottom:1px solid rgba(232,217,187,.25);
+  }
+  .book-title-group .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--accent);
+    margin:0 0 6px;
+  }
+  .book-title-group h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    font-size:clamp(24px,4vw,34px);
+    margin:0 0 6px;
+  }
+  .book-title-group p{
+    margin:0;
+    font-size:14px;
+    color:#D6E2EC;
+    max-width:48ch;
+  }
+
+  .balance-cluster{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+  .balance-box{
+    background:rgba(232,217,187,.08);
+    border:1px dashed rgba(232,217,187,.4);
+    border-radius:4px;
+    padding:10px 16px;
+    text-align:right;
+    min-width:160px;
+  }
+  .balance-box .label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:block;
+    margin-bottom:4px;
+  }
+  .balance-box .value{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:24px;
+    font-weight:600;
+    border-bottom:3px double #E8D9BB;
+    padding-bottom:3px;
+    display:inline-block;
+    min-width:70px;
+  }
+  .restart-all{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:.03em;
+    color:var(--paper);
+    background:rgba(232,217,187,.1);
+    border:1px solid rgba(232,217,187,.35);
+    border-radius:4px;
+    padding:7px 12px;
+    cursor:pointer;
+  }
+  .restart-all:hover{background:rgba(232,217,187,.2);}
+  .restart-all:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  /* ---------- TABS ---------- */
+  .tabs{display:flex;gap:6px;padding:14px 10px 0;overflow-x:auto;}
+  .tab-btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.03em;
+    color:#D6E2EC;
+    background:rgba(232,217,187,.08);
+    border:1px solid rgba(232,217,187,.28);
+    border-bottom:none;
+    padding:11px 16px 13px;
+    border-radius:8px 8px 0 0;
+    cursor:pointer;
+    white-space:nowrap;
+    position:relative;
+    top:1px;
+    transition:background .15s ease, color .15s ease, transform .15s ease;
+  }
+  .tab-btn .tab-num{color:var(--accent);margin-right:6px;}
+  .tab-btn:hover{background:rgba(232,217,187,.16);}
+  .tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .tab-btn[aria-selected="true"]{
+    background:var(--paper);
+    color:var(--ink);
+    border-color:var(--paper);
+    transform:translateY(-2px);
+  }
+  .tab-btn[aria-selected="true"] .tab-num{color:var(--bad);}
+  .tab-status{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    display:block;
+    margin-top:2px;
+    color:#A9C2D6;
+  }
+  .tab-btn[aria-selected="true"] .tab-status{color:var(--ink-soft);}
+
+  /* ---------- PAGE (manifest paper) ---------- */
+  main{
+    background:var(--paper);
+    border-radius:0 6px 6px 6px;
+    box-shadow:var(--shadow);
+    position:relative;
+    min-height:420px;
+  }
+  .page{
+    display:none;
+    padding:30px 26px 34px 54px;
+    position:relative;
+    background-image:repeating-linear-gradient(
+      to bottom, transparent 0px, transparent 37px, var(--paper-line) 38px
+    );
+    background-position:0 96px;
+  }
+  .page.active{display:block;}
+  .page::before{
+    content:"";
+    position:absolute;
+    left:34px;
+    top:0;
+    bottom:0;
+    width:2px;
+    background-image:radial-gradient(circle, var(--ink-soft) 1.4px, transparent 1.6px);
+    background-size:2px 11px;
+    background-repeat:repeat-y;
+    opacity:.55;
+  }
+
+  .page-head{margin-bottom:18px;}
+  .page-head h2{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    font-size:19px;
+    margin:0 0 6px;
+  }
+  .page-head p{margin:0;font-size:13.5px;color:var(--ink-soft);max-width:62ch;}
+
+  /* ---------- VOCABULARY LANDING PAGE ---------- */
+  .voc-list{display:flex;flex-direction:column;}
+  .voc-item{
+    display:grid;
+    grid-template-columns:34px minmax(150px,220px) 1fr;
+    column-gap:14px;
+    align-items:baseline;
+    padding:9px 0;
+    border-bottom:1px solid var(--paper-line);
+  }
+  .voc-item:last-child{border-bottom:none;}
+  .voc-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--bad);}
+  .voc-term{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13.5px;color:var(--ink);line-height:1.4;}
+  .voc-pos{display:block;font-family:'IBM Plex Sans',sans-serif;font-style:italic;font-weight:400;font-size:11px;color:var(--accent);margin-top:1px;}
+  .voc-def{margin:0;font-size:13.5px;line-height:1.55;color:var(--ink-soft);}
+  .voc-example{display:block;font-size:12px;color:var(--ink-soft);margin-top:2px;font-style:italic;}
+  @media (max-width:620px){
+    .voc-item{grid-template-columns:24px 1fr;row-gap:4px;}
+    .voc-def{grid-column:1 / -1;padding-left:24px;}
+  }
+
+  /* ---------- WORD BANK / DRAG&DROP ---------- */
+  .word-bank{
+    display:flex;flex-wrap:wrap;gap:10px;padding:14px;margin:0 0 20px;
+    background:var(--paper-soft);border:1px dashed var(--accent);border-radius:6px;
+  }
+  .chip{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+    background:#fff;border:1px solid var(--ink-soft);border-radius:3px;
+    padding:7px 10px 7px 22px;cursor:grab;position:relative;user-select:none;
+    box-shadow:1px 1px 0 rgba(43,42,40,.15);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .chip::before{
+    content:"";position:absolute;left:8px;top:50%;width:6px;height:6px;border-radius:50%;
+    background:var(--paper);border:1px solid var(--ink-soft);transform:translateY(-50%);
+  }
+  .chip:hover{transform:translateY(-1px);box-shadow:2px 3px 0 rgba(43,42,40,.2);}
+  .chip.selected{outline:2px solid var(--accent);outline-offset:1px;}
+  .chip.placed-ghost{opacity:.35;cursor:default;pointer-events:none;}
+  .chip:focus-visible{outline:2px solid var(--bad);outline-offset:2px;}
+
+  .dd-item{display:flex;align-items:baseline;gap:10px;margin:0 0 14px;font-size:14.5px;line-height:1.55;}
+  .dd-item .dd-num{font-family:'IBM Plex Mono',monospace;color:var(--bad);font-size:12px;min-width:18px;}
+  .dd-item .dd-text{flex:1;}
+  .slot{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:150px;min-height:28px;padding:3px 10px;
+    border-bottom:2px solid var(--ink-soft);
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--ink);
+    background:rgba(214,116,43,.08);cursor:pointer;vertical-align:middle;
+  }
+  .slot.drag-over{background:rgba(214,116,43,.28);}
+  .slot.empty::after{content:"place term here";color:#8f8570;font-weight:400;font-style:italic;}
+  .slot.filled{background:#fff;border-bottom-color:var(--accent);}
+  .slot .placed-chip{font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
+  .slot.correct{border-bottom-color:var(--good);background:rgba(47,111,78,.12);}
+  .slot.incorrect{border-bottom-color:var(--bad);background:rgba(178,58,46,.12);}
+
+  /* ---------- MULTIPLE CHOICE ---------- */
+  .mc-item{margin:0 0 20px;padding-bottom:14px;}
+  .mc-item .q{font-size:14.5px;line-height:1.55;margin:0 0 10px;}
+  .mc-item .q .qn{font-family:'IBM Plex Mono',monospace;color:var(--bad);font-size:12px;margin-right:8px;}
+  .mc-options{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+  .mc-option{
+    display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--paper-line);
+    border-radius:5px;padding:9px 11px;font-size:13.5px;cursor:pointer;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .mc-option:hover{border-color:var(--accent);}
+  .mc-option input{accent-color:var(--cover);}
+  .mc-option.chosen{border-color:var(--accent);background:rgba(214,116,43,.1);}
+  .mc-option.opt-correct{border-color:var(--good);background:rgba(47,111,78,.14);}
+  .mc-option.opt-incorrect{border-color:var(--bad);background:rgba(178,58,46,.14);}
+
+  /* ---------- TRUE / FALSE ---------- */
+  .tf-item{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:12px 0;border-bottom:1px solid var(--paper-line);font-size:14px;
+  }
+  .tf-item:last-of-type{border-bottom:none;}
+  .tf-item .statement{flex:1;line-height:1.5;}
+  .tf-item .statement .sn{font-family:'IBM Plex Mono',monospace;color:var(--bad);font-size:12px;margin-right:8px;}
+  .tf-toggle{display:flex;gap:6px;flex-shrink:0;}
+  .tf-btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;padding:7px 12px;
+    border-radius:4px;border:1px solid var(--ink-soft);background:#fff;cursor:pointer;letter-spacing:.04em;
+  }
+  .tf-btn.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .tf-btn.correct{background:var(--good);color:#fff;border-color:var(--good);}
+  .tf-btn.incorrect{background:var(--bad);color:#fff;border-color:var(--bad);}
+
+  /* ---------- CONJUGATIONS ---------- */
+  .cj-item{margin:0 0 16px;font-size:14.5px;line-height:1.6;}
+  .cj-item .cj-n{font-family:'IBM Plex Mono',monospace;color:var(--bad);font-size:12px;margin-right:8px;}
+  .cj-item .hint{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);
+    display:block;margin:2px 0 6px 26px;
+  }
+  .cj-input{
+    font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;
+    border:none;border-bottom:2px solid var(--ink-soft);background:rgba(214,116,43,.08);
+    padding:4px 8px;width:150px;color:var(--ink);
+  }
+  .cj-input:focus{outline:none;border-bottom-color:var(--accent);background:#fff;}
+  .cj-input.correct{border-bottom-color:var(--good);background:rgba(47,111,78,.12);}
+  .cj-input.incorrect{border-bottom-color:var(--bad);background:rgba(178,58,46,.12);}
+  .cj-input:disabled{color:var(--ink);opacity:1;}
+
+  /* ---------- FOOTER CONTROLS ---------- */
+  .page-footer{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;
+    margin-top:22px;padding-top:16px;border-top:1px solid var(--paper-line);
+  }
+  .footer-buttons{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;letter-spacing:.03em;
+    padding:10px 16px;border-radius:5px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+    cursor:pointer;transition:transform .12s ease, opacity .12s ease;
+  }
+  .btn:hover:not(:disabled){transform:translateY(-1px);}
+  .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+  .btn.secondary{background:transparent;color:var(--ink);border-color:var(--ink-soft);}
+  .btn.retry{background:transparent;color:var(--accent);border-color:var(--accent);}
+  .part-score{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .part-score strong{color:var(--ink);}
+  .part-feedback{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--good);margin-top:6px;}
+
+  @media (max-width:560px){
+    .page{padding:24px 16px 28px 34px;}
+    .page::before{left:20px;}
+    .balance-box{min-width:130px;}
+    .book-header{align-items:flex-start;}
+    .balance-cluster{align-items:flex-end;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .tab-btn, .chip, .btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="workbook">
+
+  <div class="book-header">
+    <div class="book-title-group">
+      <p class="eyebrow">Cargo Manifest · Vocabulary Practice</p>
+      <h1>Logistics Vocabulary Workbook</h1>
+      <p>Four exercises built from 30 logistics terms, 40 points total. Answer choices reshuffle every attempt, so you can retake the workbook to test your retention.</p>
+    </div>
+    <div class="balance-cluster">
+      <div class="balance-box">
+        <span class="label">Manifest Total</span>
+        <span class="value" id="totalBalance">0 / 40</span>
+      </div>
+      <button class="restart-all" id="restartAll" type="button">↺ Restart whole workbook</button>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Exercise parts">
+    <button class="tab-btn" role="tab" id="tabbtn-0" aria-controls="part0" aria-selected="true" data-part="0">
+      <span class="tab-num">00</span>Vocabulary
+      <span class="tab-status" id="status-0">Reference</span>
+    </button>
+    <button class="tab-btn" role="tab" id="tabbtn-1" aria-controls="part1" aria-selected="false" data-part="1">
+      <span class="tab-num">01</span>Drag &amp; Drop
+      <span class="tab-status" id="status-1">Not started</span>
+    </button>
+    <button class="tab-btn" role="tab" id="tabbtn-2" aria-controls="part2" aria-selected="false" data-part="2">
+      <span class="tab-num">02</span>Multiple Choice
+      <span class="tab-status" id="status-2">Not started</span>
+    </button>
+    <button class="tab-btn" role="tab" id="tabbtn-3" aria-controls="part3" aria-selected="false" data-part="3">
+      <span class="tab-num">03</span>True / False
+      <span class="tab-status" id="status-3">Not started</span>
+    </button>
+    <button class="tab-btn" role="tab" id="tabbtn-4" aria-controls="part4" aria-selected="false" data-part="4">
+      <span class="tab-num">04</span>Conjugations
+      <span class="tab-status" id="status-4">Not started</span>
+    </button>
+  </nav>
+
+  <main>
+    <!-- ================= PART 0 — VOCABULARY LANDING PAGE ================= -->
+    <section class="page active" id="part0" role="tabpanel" aria-labelledby="tabbtn-0">
+      <div class="page-head">
+        <h2>30 Key Logistics Vocabulary Items</h2>
+        <p>Study these terms carefully before attempting the exercises. Each word is used in at least one exercise.</p>
+      </div>
+      <div class="voc-list" id="vocList"></div>
+    </section>
+
+    <!-- ================= PART 1 — DRAG & DROP ================= -->
+    <section class="page" id="part1" role="tabpanel" aria-labelledby="tabbtn-1">
+      <div class="page-head">
+        <h2>Part 1 — Match the term to its definition</h2>
+        <p>Drag a term from the word bank into the correct blank. On touch devices, tap a term to select it, then tap the blank where it belongs. Tap a placed term to send it back to the bank. Terms and blanks reshuffle every attempt.</p>
+      </div>
+      <div class="word-bank" id="wordBank1" aria-label="Word bank"></div>
+      <div id="ddList"></div>
+      <div class="page-footer">
+        <div>
+          <div class="part-score">Score: <strong id="score1">0</strong> / 10</div>
+          <div class="part-feedback" id="feedback1" aria-live="polite"></div>
+        </div>
+        <div class="footer-buttons">
+          <button class="btn" id="check1">Check answers</button>
+          <button class="btn secondary" id="reveal1">Correct answers</button>
+          <button class="btn retry" id="retry1">Try again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 2 — MULTIPLE CHOICE ================= -->
+    <section class="page" id="part2" role="tabpanel" aria-labelledby="tabbtn-2">
+      <div class="page-head">
+        <h2>Part 2 — Choose the correct term</h2>
+        <p>Read each sentence and select the term that best completes it. Options are shuffled each time.</p>
+      </div>
+      <div id="mcList"></div>
+      <div class="page-footer">
+        <div>
+          <div class="part-score">Score: <strong id="score2">0</strong> / 10</div>
+          <div class="part-feedback" id="feedback2" aria-live="polite"></div>
+        </div>
+        <div class="footer-buttons">
+          <button class="btn" id="check2">Check answers</button>
+          <button class="btn secondary" id="reveal2">Correct answers</button>
+          <button class="btn retry" id="retry2">Try again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 3 — TRUE / FALSE ================= -->
+    <section class="page" id="part3" role="tabpanel" aria-labelledby="tabbtn-3">
+      <div class="page-head">
+        <h2>Part 3 — True or false?</h2>
+        <p>Decide whether each statement about logistics vocabulary is true or false. Statement order reshuffles each attempt.</p>
+      </div>
+      <div id="tfList"></div>
+      <div class="page-footer">
+        <div>
+          <div class="part-score">Score: <strong id="score3">0</strong> / 10</div>
+          <div class="part-feedback" id="feedback3" aria-live="polite"></div>
+        </div>
+        <div class="footer-buttons">
+          <button class="btn" id="check3">Check answers</button>
+          <button class="btn secondary" id="reveal3">Correct answers</button>
+          <button class="btn retry" id="retry3">Try again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 4 — CONJUGATIONS ================= -->
+    <section class="page" id="part4" role="tabpanel" aria-labelledby="tabbtn-4">
+      <div class="page-head">
+        <h2>Part 4 — Conjugate the verb</h2>
+        <p>Complete each sentence with the correct form of the verb in brackets: <em>load</em>, <em>unload</em>, or <em>order</em>. Question order reshuffles each attempt.</p>
+      </div>
+      <div id="cjList"></div>
+      <div class="page-footer">
+        <div>
+          <div class="part-score">Score: <strong id="score4">0</strong> / 10</div>
+          <div class="part-feedback" id="feedback4" aria-live="polite"></div>
+        </div>
+        <div class="footer-buttons">
+          <button class="btn" id="check4">Check answers</button>
+          <button class="btn secondary" id="reveal4">Correct answers</button>
+          <button class="btn retry" id="retry4">Try again</button>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px dashed var(--paper-line);">Tip: load → loads / loaded / loading / are loaded · unload → unloaded / unloading · order → orders / ordered.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ======================================================
+     MASTER DATA (never mutated — working copies are shuffled per attempt)
+     ====================================================== */
+
+  var VOCAB = [
+    { term: "Shipment", pos: "noun", def: "Goods being transported." },
+    { term: "Delivery", pos: "noun", def: "When goods are taken to a customer." },
+    { term: "Warehouse", pos: "noun", def: "A building where goods are stored." },
+    { term: "Stock", pos: "noun", def: "Goods that a company has available." },
+    { term: "Order", pos: "noun", def: "A request to buy goods." },
+    { term: "Supplier", pos: "noun", def: "A company that provides goods." },
+    { term: "Customer", pos: "noun", def: "The person or company receiving or buying goods." },
+    { term: "Goods", pos: "noun", def: "Products or things being transported." },
+    { term: "Package", pos: "noun", def: "Something packed for delivery." },
+    { term: "Pallet", pos: "noun", def: "A flat platform used to move goods." },
+    { term: "Box", pos: "noun", def: "A container for goods." },
+    { term: "Load", pos: "noun", def: "Goods put onto a vehicle." },
+    { term: "Unload", pos: "verb", def: "To take goods off a vehicle." },
+    { term: "Load", pos: "verb", def: "To put goods onto a vehicle." },
+    { term: "Truck / Lorry", pos: "noun", def: "A large road vehicle for transporting goods." },
+    { term: "Driver", pos: "noun", def: "The person who drives the truck." },
+    { term: "Route", pos: "noun", def: "The way from one place to another." },
+    { term: "Destination", pos: "noun", def: "The place where goods are going." },
+    { term: "Address", pos: "noun", def: "The location where something is sent." },
+    { term: "Label", pos: "noun", def: "Information attached to a package." },
+    { term: "Barcode", pos: "noun", def: "A code that can be scanned." },
+    { term: "Tracking Number", pos: "noun phrase", def: "A number used to follow a shipment." },
+    { term: "Invoice", pos: "noun", def: "A document showing what must be paid." },
+    { term: "Quantity", pos: "noun", def: "The amount or number of something." },
+    { term: "Weight", pos: "noun", def: "How heavy something is." },
+    { term: "Damaged", pos: "adjective", def: "Broken or harmed." },
+    { term: "Missing", pos: "adjective", def: "Not there, or cannot be found." },
+    { term: "Delay", pos: "noun", def: "A situation where something happens later than planned." },
+    { term: "On Time", pos: "adverb phrase", def: "Arriving or happening at the planned time." },
+    { term: "In Transit", pos: "adjective phrase", def: "Currently being transported." }
+  ];
+
+  var DD_TERMS = [
+    "Shipment", "Delivery", "Warehouse", "Stock", "Supplier",
+    "Customer", "Pallet", "Destination", "Barcode", "Invoice"
+  ];
+
+  var DD_ITEMS = [
+    { text: "refers to goods that are currently being transported.", answer: "Shipment" },
+    { text: "is the process of taking goods to a customer.", answer: "Delivery" },
+    { text: "is a building where goods are stored.", answer: "Warehouse" },
+    { text: "refers to the goods that a company has available to sell or use.", answer: "Stock" },
+    { text: "is a company that provides goods to another business.", answer: "Supplier" },
+    { text: "is the person or company receiving or buying goods.", answer: "Customer" },
+    { text: "is a flat platform used to move and stack goods.", answer: "Pallet" },
+    { text: "is the place where goods are being sent.", answer: "Destination" },
+    { text: "is a code that can be scanned to identify a package.", answer: "Barcode" },
+    { text: "is a document that shows what must be paid.", answer: "Invoice" }
+  ];
+
+  var MC_ITEMS = [
+    { q: "A request to buy goods is called an ______.",
+      options: ["Order", "Invoice", "Delivery", "Stock"], answer: "Order" },
+    { q: "Products or things being transported are generally called ______.",
+      options: ["Goods", "Pallets", "Labels", "Routes"], answer: "Goods" },
+    { q: "Something packed and ready for delivery is called a ______.",
+      options: ["Package", "Warehouse", "Barcode", "Supplier"], answer: "Package" },
+    { q: "A container used to hold goods is called a ______.",
+      options: ["Box", "Pallet", "Invoice", "Route"], answer: "Box" },
+    { q: "A large road vehicle used to transport goods is called a ______.",
+      options: ["Truck / Lorry", "Driver", "Warehouse", "Stock"], answer: "Truck / Lorry" },
+    { q: "The person who drives the truck is called the ______.",
+      options: ["Driver", "Customer", "Supplier", "Destination"], answer: "Driver" },
+    { q: "The way from one place to another is called the ______.",
+      options: ["Route", "Address", "Label", "Barcode"], answer: "Route" },
+    { q: "The location where something is sent is called the ______.",
+      options: ["Address", "Destination", "Route", "Warehouse"], answer: "Address" },
+    { q: "Information attached to a package is called a ______.",
+      options: ["Label", "Barcode", "Invoice", "Tracking Number"], answer: "Label" },
+    { q: "A number used to follow a shipment is called a ______.",
+      options: ["Tracking Number", "Barcode", "Quantity", "Weight"], answer: "Tracking Number" }
+  ];
+
+  var TF_ITEMS = [
+    { s: "Quantity refers to how heavy something is.", answer: false },
+    { s: "Weight describes how heavy something is.", answer: true },
+    { s: "If a package is damaged, it means it arrived broken or harmed.", answer: true },
+    { s: "If an item is missing, it means it has arrived safely at its destination.", answer: false },
+    { s: "A delay means something happens later than planned.", answer: true },
+    { s: "'On time' describes a delivery that arrives later than expected.", answer: false },
+    { s: "'In transit' means a shipment has already arrived at its destination.", answer: false },
+    { s: "An invoice is a document that shows what must be paid.", answer: true },
+    { s: "A warehouse is a vehicle used to transport goods.", answer: false },
+    { s: "A supplier is a company that provides goods to another business.", answer: true }
+  ];
+
+  var CJ_ITEMS = [
+    { pre: "Every morning, the warehouse team", verb: "load", tense: "present simple, 3rd person", post: "the trucks before 7 a.m.", accept: ["loads"] },
+    { pre: "Yesterday, the driver", verb: "unload", tense: "past simple", post: "the pallets at the depot.", accept: ["unloaded"] },
+    { pre: "The customer has already", verb: "order", tense: "past participle", post: "three more pallets of stock.", accept: ["ordered"] },
+    { pre: "The warehouse staff are currently", verb: "load", tense: "present continuous", post: "the last truck of the day.", accept: ["loading"] },
+    { pre: "The truck was", verb: "unload", tense: "passive, past simple", post: "as soon as it arrived.", accept: ["unloaded"] },
+    { pre: "Next week, the supplier will", verb: "order", tense: "base form, after 'will'", post: "new packaging materials.", accept: ["order"] },
+    { pre: "By the time we arrive, the driver will have", verb: "unload", tense: "future perfect, past participle", post: "the whole shipment.", accept: ["unloaded"] },
+    { pre: "The company is responsible for", verb: "load", tense: "gerund, after a preposition", post: "the goods safely.", accept: ["loading"] },
+    { pre: "We do not usually", verb: "order", tense: "base form, after 'do not'", post: "more than we need.", accept: ["order"] },
+    { pre: "The pallets", verb: "load", tense: "passive, present simple", post: "onto the truck every evening.", accept: ["are loaded"] }
+  ];
+
+  var TOTAL_POSSIBLE = DD_ITEMS.length + MC_ITEMS.length + TF_ITEMS.length + CJ_ITEMS.length;
+
+  /* ======================================================
+     STATE
+     ====================================================== */
+  var state = {
+    1: { score: 0, checked: false, revealed: false },
+    2: { score: 0, checked: false, revealed: false },
+    3: { score: 0, checked: false, revealed: false },
+    4: { score: 0, checked: false, revealed: false }
+  };
+
+  var currentDD = [];
+  var currentDDTerms = [];
+  var currentMC = [];
+  var currentTF = [];
+  var currentCJ = [];
+
+  var ddSlotAnswers = [];
+  var selectedChip = null;
+
+  /* ======================================================
+     HELPERS
+     ====================================================== */
+  function qs(sel, root){ return (root||document).querySelector(sel); }
+  function qsa(sel, root){ return Array.prototype.slice.call((root||document).querySelectorAll(sel)); }
+  function el(tag, cls, html){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  }
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+  function updateTotalBalance(){
+    var total = 0;
+    for (var k in state){
+      if (Object.prototype.hasOwnProperty.call(state, k)) total += (state[k].score || 0);
+    }
+    var elx = qs('#totalBalance');
+    if (elx) elx.textContent = total + ' / ' + TOTAL_POSSIBLE;
+  }
+  function setTabStatus(part, text){
+    var s = qs('#status-' + part);
+    if (s) s.textContent = text;
+  }
+
+  /* ======================================================
+     TABS
+     ====================================================== */
+  function initTabs(){
+    var buttons = qsa('.tab-btn');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var part = btn.getAttribute('data-part');
+        buttons.forEach(function(b){ b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
+        qsa('.page').forEach(function(p){ p.classList.remove('active'); });
+        var target = qs('#part' + part);
+        if (target) target.classList.add('active');
+      });
+    });
+  }
+
+  /* ======================================================
+     PART 0 — VOCABULARY LANDING PAGE
+     ====================================================== */
+  function renderVocab(){
+    var list = qs('#vocList');
+    if (!list) return;
+    list.innerHTML = '';
+    VOCAB.forEach(function(item, i){
+      var row = el('div', 'voc-item');
+      var num = el('span', 'voc-num', String(i + 1).length < 2 ? '0' + (i + 1) : String(i + 1));
+      var termWrap = el('span');
+      termWrap.appendChild(document.createTextNode(item.term));
+      var pos = el('span', 'voc-pos', escapeHtml(item.pos));
+      termWrap.appendChild(pos);
+      var def = el('p', 'voc-def', escapeHtml(item.def));
+      row.appendChild(num);
+      row.appendChild(termWrap);
+      row.appendChild(def);
+      list.appendChild(row);
+    });
+  }
+
+  /* ======================================================
+     PART 1 — DRAG & DROP
+     ====================================================== */
+  function renderPart1(){
+    var bank = qs('#wordBank1');
+    var list = qs('#ddList');
+    if (!bank || !list) return;
+    bank.innerHTML = '';
+    list.innerHTML = '';
+
+    currentDD = shuffle(DD_ITEMS);
+    currentDDTerms = shuffle(DD_TERMS);
+    ddSlotAnswers = new Array(currentDD.length).fill(null);
+    selectedChip = null;
+
+    currentDDTerms.forEach(function(term){
+      var chip = el('div', 'chip', escapeHtml(term));
+      chip.setAttribute('draggable', 'true');
+      chip.setAttribute('data-term', term);
+      chip.setAttribute('tabindex', '0');
+      chip.setAttribute('role', 'button');
+      chip.setAttribute('aria-label', 'Term: ' + term + '. Select, then choose a blank.');
+
+      chip.addEventListener('dragstart', function(e){
+        try { e.dataTransfer.setData('text/plain', term); e.dataTransfer.effectAllowed = 'move'; } catch(err){}
+      });
+
+      chip.addEventListener('click', function(){
+        if (state[1].checked || state[1].revealed) return;
+        if (chip.classList.contains('placed-ghost')) return;
+        qsa('.chip', bank).forEach(function(c){ c.classList.remove('selected'); });
+        if (selectedChip === term) { selectedChip = null; return; }
+        selectedChip = term;
+        chip.classList.add('selected');
+      });
+      chip.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chip.click(); }
+      });
+
+      bank.appendChild(chip);
+    });
+
+    currentDD.forEach(function(item, i){
+      var row = el('div', 'dd-item');
+      var num = el('span', 'dd-num', String(i + 1) + '.');
+      var textWrap = el('span', 'dd-text');
+      var slot = el('span', 'slot empty');
+      slot.setAttribute('data-index', String(i));
+      slot.setAttribute('tabindex', '0');
+      slot.setAttribute('role', 'button');
+      slot.setAttribute('aria-label', 'Blank ' + (i + 1) + ', currently empty');
+
+      textWrap.appendChild(slot);
+      textWrap.appendChild(document.createTextNode(' ' + item.text));
+
+      slot.addEventListener('dragover', function(e){ e.preventDefault(); slot.classList.add('drag-over'); });
+      slot.addEventListener('dragleave', function(){ slot.classList.remove('drag-over'); });
+      slot.addEventListener('drop', function(e){
+        e.preventDefault();
+        slot.classList.remove('drag-over');
+        if (state[1].checked || state[1].revealed) return;
+        var term;
+        try { term = e.dataTransfer.getData('text/plain'); } catch(err){ term = null; }
+        if (term) placeTermInSlot(term, i);
+      });
+
+      slot.addEventListener('click', function(){
+        if (state[1].checked || state[1].revealed) return;
+        if (ddSlotAnswers[i]) {
+          returnTermToBank(i);
+        } else if (selectedChip) {
+          placeTermInSlot(selectedChip, i);
+        }
+      });
+      slot.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); slot.click(); }
+      });
+
+      row.appendChild(num);
+      row.appendChild(textWrap);
+      list.appendChild(row);
+    });
+  }
+
+  function findChipEl(term){
+    return qsa('#wordBank1 .chip').filter(function(c){ return c.getAttribute('data-term') === term; })[0];
+  }
+
+  function placeTermInSlot(term, index){
+    for (var j = 0; j < ddSlotAnswers.length; j++){
+      if (ddSlotAnswers[j] === term) returnTermToBank(j);
+    }
+    if (ddSlotAnswers[index]) returnTermToBank(index);
+
+    ddSlotAnswers[index] = term;
+    var slot = qs('.slot[data-index="' + index + '"]');
+    if (slot){
+      slot.classList.remove('empty');
+      slot.classList.add('filled');
+      slot.innerHTML = '';
+      var chipLabel = el('span', 'placed-chip', escapeHtml(term));
+      slot.appendChild(chipLabel);
+      slot.setAttribute('aria-label', 'Blank ' + (index + 1) + ', filled with ' + term + '. Activate to remove.');
+    }
+    var chipEl = findChipEl(term);
+    if (chipEl){ chipEl.classList.add('placed-ghost'); chipEl.classList.remove('selected'); chipEl.setAttribute('draggable', 'false'); }
+    selectedChip = null;
+  }
+
+  function returnTermToBank(index){
+    var term = ddSlotAnswers[index];
+    if (!term) return;
+    ddSlotAnswers[index] = null;
+    var slot = qs('.slot[data-index="' + index + '"]');
+    if (slot){
+      slot.classList.add('empty');
+      slot.classList.remove('filled', 'correct', 'incorrect');
+      slot.innerHTML = '';
+      slot.setAttribute('aria-label', 'Blank ' + (index + 1) + ', currently empty');
+    }
+    var chipEl = findChipEl(term);
+    if (chipEl){ chipEl.classList.remove('placed-ghost'); chipEl.setAttribute('draggable', 'true'); }
+  }
+
+  function checkPart1(){
+    if (state[1].revealed) return;
+    var correct = 0;
+    currentDD.forEach(function(item, i){
+      var slot = qs('.slot[data-index="' + i + '"]');
+      if (!slot) return;
+      var given = ddSlotAnswers[i];
+      var isCorrect = given === item.answer;
+      slot.classList.remove('correct', 'incorrect');
+      slot.classList.add(isCorrect ? 'correct' : 'incorrect');
+      if (isCorrect) correct++;
+    });
+    state[1].score = correct;
+    state[1].checked = true;
+    var scoreEl = qs('#score1'); if (scoreEl) scoreEl.textContent = String(correct);
+    var fb = qs('#feedback1'); if (fb) fb.textContent = correct === currentDD.length ? 'All terms placed correctly.' : (correct + ' of ' + currentDD.length + ' correct — review the red blanks.');
+    setTabStatus(1, correct + '/' + currentDD.length + ' checked');
+    updateTotalBalance();
+  }
+
+  function revealPart1(){
+    currentDD.forEach(function(item, i){
+      returnTermToBank(i);
+      var slot = qs('.slot[data-index="' + i + '"]');
+      if (!slot) return;
+      slot.classList.remove('empty', 'incorrect');
+      slot.classList.add('filled', 'correct');
+      slot.innerHTML = '<span class="placed-chip">' + escapeHtml(item.answer) + '</span>';
+      var chipEl = findChipEl(item.answer);
+      if (chipEl) chipEl.classList.add('placed-ghost');
+    });
+    state[1].revealed = true;
+    state[1].score = 0;
+    var scoreEl = qs('#score1'); if (scoreEl) scoreEl.textContent = '0';
+    var fb = qs('#feedback1'); if (fb) fb.textContent = 'Correct answers revealed — not scored.';
+    setTabStatus(1, 'Answers revealed');
+    updateTotalBalance();
+  }
+
+  /* ======================================================
+     PART 2 — MULTIPLE CHOICE
+     ====================================================== */
+  function renderPart2(){
+    var list = qs('#mcList');
+    if (!list) return;
+    list.innerHTML = '';
+
+    currentMC = MC_ITEMS.map(function(item){
+      return { q: item.q, answer: item.answer, options: shuffle(item.options) };
+    });
+
+    currentMC.forEach(function(item, i){
+      var wrap = el('div', 'mc-item');
+      var q = el('p', 'q');
+      q.innerHTML = '<span class="qn">' + (i + 1) + '.</span>' + escapeHtml(item.q);
+      var opts = el('div', 'mc-options');
+
+      item.options.forEach(function(opt){
+        var label = el('label', 'mc-option');
+        var input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'mc' + i;
+        input.value = opt;
+        input.addEventListener('change', function(){
+          if (state[2].checked || state[2].revealed) return;
+          qsa('.mc-option', opts).forEach(function(l){ l.classList.remove('chosen'); });
+          label.classList.add('chosen');
+        });
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(opt));
+        opts.appendChild(label);
+      });
+
+      wrap.appendChild(q);
+      wrap.appendChild(opts);
+      list.appendChild(wrap);
+    });
+  }
+
+  function checkPart2(){
+    if (state[2].revealed) return;
+    var correct = 0;
+    currentMC.forEach(function(item, i){
+      var checked = qs('input[name="mc' + i + '"]:checked');
+      var options = qsa('input[name="mc' + i + '"]');
+      var isCorrect = !!checked && checked.value === item.answer;
+      if (isCorrect) correct++;
+      options.forEach(function(input){
+        var label = input.closest('.mc-option');
+        if (!label) return;
+        label.classList.remove('opt-correct', 'opt-incorrect');
+        if (input.value === item.answer) label.classList.add('opt-correct');
+        else if (input.checked) label.classList.add('opt-incorrect');
+        input.disabled = true;
+      });
+    });
+    state[2].score = correct;
+    state[2].checked = true;
+    var scoreEl = qs('#score2'); if (scoreEl) scoreEl.textContent = String(correct);
+    var fb = qs('#feedback2'); if (fb) fb.textContent = correct === currentMC.length ? 'Perfect score.' : (correct + ' of ' + currentMC.length + ' correct — review the highlighted options.');
+    setTabStatus(2, correct + '/' + currentMC.length + ' checked');
+    updateTotalBalance();
+  }
+
+  function revealPart2(){
+    currentMC.forEach(function(item, i){
+      var options = qsa('input[name="mc' + i + '"]');
+      options.forEach(function(input){
+        var label = input.closest('.mc-option');
+        if (!label) return;
+        label.classList.remove('opt-incorrect', 'chosen');
+        if (input.value === item.answer) label.classList.add('opt-correct');
+        input.disabled = true;
+        input.checked = input.value === item.answer;
+      });
+    });
+    state[2].revealed = true;
+    state[2].score = 0;
+    var scoreEl = qs('#score2'); if (scoreEl) scoreEl.textContent = '0';
+    var fb = qs('#feedback2'); if (fb) fb.textContent = 'Correct answers revealed — not scored.';
+    setTabStatus(2, 'Answers revealed');
+    updateTotalBalance();
+  }
+
+  /* ======================================================
+     PART 3 — TRUE / FALSE
+     ====================================================== */
+  function renderPart3(){
+    var list = qs('#tfList');
+    if (!list) return;
+    list.innerHTML = '';
+
+    currentTF = shuffle(TF_ITEMS);
+
+    currentTF.forEach(function(item, i){
+      var row = el('div', 'tf-item');
+      var stmt = el('div', 'statement');
+      stmt.innerHTML = '<span class="sn">' + (i + 1) + '.</span>' + escapeHtml(item.s);
+      var toggle = el('div', 'tf-toggle');
+      var trueBtn = el('button', 'tf-btn', 'TRUE');
+      var falseBtn = el('button', 'tf-btn', 'FALSE');
+      trueBtn.type = 'button'; falseBtn.type = 'button';
+      trueBtn.setAttribute('data-value', 'true');
+      falseBtn.setAttribute('data-value', 'false');
+
+      function select(val, btnA, btnB){
+        if (state[3].checked || state[3].revealed) return;
+        btnA.classList.add('active');
+        btnB.classList.remove('active');
+        row.setAttribute('data-answer', val);
+      }
+      trueBtn.addEventListener('click', function(){ select('true', trueBtn, falseBtn); });
+      falseBtn.addEventListener('click', function(){ select('false', falseBtn, trueBtn); });
+
+      toggle.appendChild(trueBtn);
+      toggle.appendChild(falseBtn);
+      row.appendChild(stmt);
+      row.appendChild(toggle);
+      list.appendChild(row);
+    });
+  }
+
+  function checkPart3(){
+    if (state[3].revealed) return;
+    var correct = 0;
+    var rows = qsa('.tf-item', qs('#tfList'));
+    currentTF.forEach(function(item, i){
+      var row = rows[i];
+      if (!row) return;
+      var given = row.getAttribute('data-answer');
+      var isCorrect = given !== null && (given === 'true') === item.answer;
+      if (isCorrect) correct++;
+      var trueBtn = row.querySelector('.tf-btn[data-value="true"]');
+      var falseBtn = row.querySelector('.tf-btn[data-value="false"]');
+      [trueBtn, falseBtn].forEach(function(btn){
+        if (!btn) return;
+        btn.classList.remove('correct', 'incorrect');
+        btn.disabled = true;
+      });
+      var correctBtn = item.answer ? trueBtn : falseBtn;
+      if (correctBtn) correctBtn.classList.add('correct');
+      if (given !== null && !isCorrect){
+        var wrongBtn = given === 'true' ? trueBtn : falseBtn;
+        if (wrongBtn) wrongBtn.classList.add('incorrect');
+      }
+    });
+    state[3].score = correct;
+    state[3].checked = true;
+    var scoreEl = qs('#score3'); if (scoreEl) scoreEl.textContent = String(correct);
+    var fb = qs('#feedback3'); if (fb) fb.textContent = correct === currentTF.length ? 'All statements correct.' : (correct + ' of ' + currentTF.length + ' correct — green shows the right answer.');
+    setTabStatus(3, correct + '/' + currentTF.length + ' checked');
+    updateTotalBalance();
+  }
+
+  function revealPart3(){
+    var rows = qsa('.tf-item', qs('#tfList'));
+    currentTF.forEach(function(item, i){
+      var row = rows[i];
+      if (!row) return;
+      var trueBtn = row.querySelector('.tf-btn[data-value="true"]');
+      var falseBtn = row.querySelector('.tf-btn[data-value="false"]');
+      [trueBtn, falseBtn].forEach(function(btn){
+        if (!btn) return;
+        btn.classList.remove('active', 'incorrect');
+        btn.disabled = true;
+      });
+      var correctBtn = item.answer ? trueBtn : falseBtn;
+      if (correctBtn) correctBtn.classList.add('correct');
+    });
+    state[3].revealed = true;
+    state[3].score = 0;
+    var scoreEl = qs('#score3'); if (scoreEl) scoreEl.textContent = '0';
+    var fb = qs('#feedback3'); if (fb) fb.textContent = 'Correct answers revealed — not scored.';
+    setTabStatus(3, 'Answers revealed');
+    updateTotalBalance();
+  }
+
+  /* ======================================================
+     PART 4 — CONJUGATIONS
+     ====================================================== */
+  function renderPart4(){
+    var list = qs('#cjList');
+    if (!list) return;
+    list.innerHTML = '';
+
+    currentCJ = shuffle(CJ_ITEMS);
+
+    currentCJ.forEach(function(item, i){
+      var wrap = el('div', 'cj-item');
+      var line = el('div');
+      line.innerHTML = '<span class="cj-n">' + (i + 1) + '.</span>' + escapeHtml(item.pre) + ' ';
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'cj-input';
+      input.setAttribute('data-index', String(i));
+      input.setAttribute('autocomplete', 'off');
+      input.setAttribute('spellcheck', 'false');
+      input.setAttribute('aria-label', 'Conjugated form of ' + item.verb);
+      line.appendChild(input);
+      line.appendChild(document.createTextNode(' ' + item.post));
+      var hint = el('span', 'hint', '(' + escapeHtml(item.verb) + ' — ' + escapeHtml(item.tense) + ')');
+      wrap.appendChild(line);
+      wrap.appendChild(hint);
+      list.appendChild(wrap);
+    });
+  }
+
+  function normalize(str){
+    return String(str || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  }
+
+  function checkPart4(){
+    if (state[4].revealed) return;
+    var correct = 0;
+    currentCJ.forEach(function(item, i){
+      var input = qs('.cj-input[data-index="' + i + '"]');
+      if (!input) return;
+      var given = normalize(input.value);
+      var isCorrect = item.accept.indexOf(given) !== -1;
+      input.classList.remove('correct', 'incorrect');
+      input.classList.add(isCorrect ? 'correct' : 'incorrect');
+      input.disabled = true;
+      if (isCorrect) correct++;
+    });
+    state[4].score = correct;
+    state[4].checked = true;
+    var scoreEl = qs('#score4'); if (scoreEl) scoreEl.textContent = String(correct);
+    var fb = qs('#feedback4'); if (fb) fb.textContent = correct === currentCJ.length ? 'All verb forms correct.' : (correct + ' of ' + currentCJ.length + ' correct — red fields need review.');
+    setTabStatus(4, correct + '/' + currentCJ.length + ' checked');
+    updateTotalBalance();
+  }
+
+  function revealPart4(){
+    currentCJ.forEach(function(item, i){
+      var input = qs('.cj-input[data-index="' + i + '"]');
+      if (!input) return;
+      input.value = item.accept[0];
+      input.classList.remove('incorrect');
+      input.classList.add('correct');
+      input.disabled = true;
+    });
+    state[4].revealed = true;
+    state[4].score = 0;
+    var scoreEl = qs('#score4'); if (scoreEl) scoreEl.textContent = '0';
+    var fb = qs('#feedback4'); if (fb) fb.textContent = 'Correct answers revealed — not scored.';
+    setTabStatus(4, 'Answers revealed');
+    updateTotalBalance();
+  }
+
+  /* ======================================================
+     RESET / RETRY (re-renders a part, which reshuffles it)
+     ====================================================== */
+  var RENDER_FNS = { 1: renderPart1, 2: renderPart2, 3: renderPart3, 4: renderPart4 };
+
+  function resetPart(part){
+    state[part] = { score: 0, checked: false, revealed: false };
+    var renderFn = RENDER_FNS[part];
+    if (renderFn) renderFn();
+
+    var scoreEl = qs('#score' + part); if (scoreEl) scoreEl.textContent = '0';
+    var fb = qs('#feedback' + part); if (fb) fb.textContent = '';
+    setTabStatus(part, 'Not started');
+
+    var checkBtn = qs('#check' + part); if (checkBtn) checkBtn.disabled = false;
+    var revealBtn = qs('#reveal' + part); if (revealBtn) revealBtn.disabled = false;
+
+    updateTotalBalance();
+  }
+
+  function restartAll(){
+    [1, 2, 3, 4].forEach(resetPart);
+  }
+
+  /* ======================================================
+     BUTTON WIRING (guards against missing elements & double clicks)
+     ====================================================== */
+  function wireButtons(part, checkFn, revealFn){
+    var checkBtn = qs('#check' + part);
+    var revealBtn = qs('#reveal' + part);
+    var retryBtn = qs('#retry' + part);
+
+    if (checkBtn){
+      checkBtn.addEventListener('click', function(){
+        if (state[part].revealed) return;
+        checkFn();
+        checkBtn.disabled = true;
+        if (revealBtn) revealBtn.disabled = false;
+      });
+    }
+    if (revealBtn){
+      revealBtn.addEventListener('click', function(){
+        if (state[part].revealed) return;
+        revealFn();
+        if (checkBtn) checkBtn.disabled = true;
+        revealBtn.disabled = true;
+      });
+    }
+    if (retryBtn){
+      retryBtn.addEventListener('click', function(){ resetPart(part); });
+    }
+  }
+
+  /* ======================================================
+     INIT
+     ====================================================== */
+  function init(){
+    try {
+      initTabs();
+      renderVocab();
+      renderPart1();
+      renderPart2();
+      renderPart3();
+      renderPart4();
+      wireButtons(1, checkPart1, revealPart1);
+      wireButtons(2, checkPart2, revealPart2);
+      wireButtons(3, checkPart3, revealPart3);
+      wireButtons(4, checkPart4, revealPart4);
+
+      var restartBtn = qs('#restartAll');
+      if (restartBtn) restartBtn.addEventListener('click', restartAll);
+
+      updateTotalBalance();
+    } catch (err){
+      console.error('Workbook failed to initialize:', err);
+    }
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
