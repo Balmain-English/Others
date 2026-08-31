@@ -3,756 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive English Language Learning Exercises - Grammar, Vocabulary, and Professional English Courses">
-    <meta name="theme-color" content="#667eea">
-    <meta property="og:title" content="Interactive Exercises Directory">
-    <meta property="og:description" content="Access our comprehensive collection of English learning exercises organized by CEFR levels">
-    <title>Interactive English Exercises - CEFR Levels A2-C1+</title>
+    <meta name="description" content="Corporate English Training Directory & Interactive Professional Exercises">
+    <title>Enterprise English Learning Resources</title>
     <style>
-        * {
-            box-sizing: border-box;
+        :root {
+            --bg-main: #f8fafc;
+            --surface: #ffffff;
+            --primary: #1e293b;
+            --primary-accent: #2563eb;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --card-hover-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
-        html {
-            scroll-behavior: smooth;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: #212529;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 30px 20px;
         }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            animation: fadeInDown 0.6s ease-out;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 0 0 10px 0;
-            font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            margin: 0;
-            opacity: 0.95;
-        }
-
-        .container {
-            max-width: 1300px;
+        .app-container {
+            max-width: 1280px;
             margin: 0 auto;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            animation: fadeInUp 0.6s ease-out;
         }
 
-        .controls {
+        /* Executive Header */
+        header {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 32px 40px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
+        .header-title h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
         }
 
-        .search-box input {
-            width: 100%;
-            padding: 12px 16px 12px 40px;
-            border: 2px solid #e0e0e0;
+        .header-title p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        /* Metric Indicators */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 20px;
             border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
 
-        .search-box input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        .metric-card .value {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--primary);
         }
 
-        .search-box::before {
-            content: "🔍";
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.1rem;
+        .metric-card .label {
+            font-size: 0.825rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 2px;
         }
 
-        .filters-section {
+        /* Search & Control Panel */
+        .controls-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
+        }
+
+        .search-bar {
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         .filter-group {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .filter-label {
             font-size: 0.85rem;
             font-weight: 600;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            min-width: 90px;
         }
 
-        .category-filters,
-        .cefr-filters {
+        .filter-options {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
 
-        .filter-btn {
-            padding: 8px 16px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            color: #667eea;
-        }
-
-        .filter-btn:hover {
-            border-color: #667eea;
-            background: #f5f7ff;
-        }
-
-        .filter-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        /* CEFR Level Badge Colors */
-        .cefr-btn {
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 10px 18px;
+        .btn-filter {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 6px 14px;
             border-radius: 6px;
-            border: 2px solid;
-            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
         }
 
-        .cefr-a2 { color: #3b82f6; border-color: #dbeafe; background: #eff6ff; }
-        .cefr-a2.active { background: #3b82f6; color: white; border-color: #3b82f6; }
-
-        .cefr-b1 { color: #f59e0b; border-color: #fed7aa; background: #fffbeb; }
-        .cefr-b1.active { background: #f59e0b; color: white; border-color: #f59e0b; }
-
-        .cefr-b2 { color: #ef4444; border-color: #fecaca; background: #fef2f2; }
-        .cefr-b2.active { background: #ef4444; color: white; border-color: #ef4444; }
-
-        .cefr-c1 { color: #8b5cf6; border-color: #ede9fe; background: #faf5ff; }
-        .cefr-c1.active { background: #8b5cf6; color: white; border-color: #8b5cf6; }
-
-        .cefr-c2 { color: #ec4899; border-color: #fbcfe8; background: #fdf2f8; }
-        .cefr-c2.active { background: #ec4899; color: white; border-color: #ec4899; }
-
-        .results-info {
-            margin-bottom: 20px;
-            color: #666;
-            font-size: 0.95rem;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
+        .btn-filter:hover {
+            background: #e2e8f0;
         }
 
-        .grid-directory {
+        .btn-filter.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        /* Directory Grid */
+        .directory-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
-            margin-top: 20px;
         }
 
-        .exercise-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .module-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             padding: 20px;
             text-decoration: none;
-            background: linear-gradient(135deg, #f5f7ff 0%, #eff1ff 100%);
-            color: #667eea;
-            border: 2px solid #e8ecff;
-            border-radius: 12px;
-            font-size: 0.95rem;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            box-shadow: var(--card-shadow);
+        }
+
+        .module-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .module-title {
+            font-size: 1rem;
             font-weight: 600;
-            line-height: 1.4;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 120px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            color: var(--primary);
+            margin-bottom: 16px;
+            line-height: 1.35;
         }
 
-        .exercise-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: left 0.3s ease;
-            z-index: -1;
+        .module-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            margin-top: auto;
         }
 
-        .exercise-card:hover::before {
-            left: 0;
-        }
-
-        .exercise-card:hover {
-            color: white;
-            border-color: #667eea;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
-        }
-
-        .exercise-card-label {
-            position: relative;
-            z-index: 1;
-        }
-
-        .category-badge {
-            display: inline-block;
+        .category-tag {
             font-size: 0.75rem;
-            padding: 3px 8px;
-            background: rgba(102, 126, 234, 0.15);
-            color: #667eea;
-            border-radius: 12px;
-            margin-top: 6px;
+            color: var(--text-muted);
             font-weight: 500;
         }
 
-        .exercise-card:hover .category-badge {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-
+        /* CEFR Badges */
         .cefr-badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 14px;
-            margin-top: 6px;
+            font-size: 0.7rem;
             font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: white;
         }
 
-        .badge-a2 { background: #3b82f6; }
-        .badge-b1 { background: #f59e0b; }
-        .badge-b2 { background: #ef4444; }
-        .badge-c1 { background: #8b5cf6; }
-        .badge-c2 { background: #ec4899; }
-
-        .exercise-card:hover .cefr-badge {
-            filter: brightness(1.2);
-        }
+        .badge-a1, .badge-a2 { background: #dcfce7; color: #166534; }
+        .badge-b1, .badge-b2 { background: #dbeafe; color: #1e40af; }
+        .badge-c1, .badge-c2 { background: #f3e8ff; color: #6b21a8; }
+        .badge-general { background: #f1f5f9; color: #475569; }
 
         .empty-state {
+            grid-column: 1 / -1;
             text-align: center;
             padding: 60px 20px;
-            color: #999;
-        }
-
-        .empty-state-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .empty-state p {
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        .stats {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 4px;
-        }
-
-        .cefr-info-box {
-            background: linear-gradient(135deg, #f5f7ff 0%, #eff1ff 100%);
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin-bottom: 30px;
+            background: var(--surface);
+            border: 1px dashed var(--border);
             border-radius: 8px;
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.6;
+            color: var(--text-muted);
         }
 
-        .cefr-info-box strong {
-            color: #667eea;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .grid-directory {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 12px;
-            }
-
-            .exercise-card {
-                padding: 15px;
-                min-height: 100px;
-                font-size: 0.85rem;
-            }
-
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-box {
-                min-width: unset;
-            }
-
-            .category-filters,
-            .cefr-filters {
-                justify-content: center;
-            }
-
-            .filters-section {
-                gap: 12px;
-            }
-
-            .results-info {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Accessibility */
-        .filter-btn:focus,
-        .exercise-card:focus,
-        .search-box input:focus {
-            outline: 2px solid #667eea;
-            outline-offset: 2px;
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-            z-index: 999;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
-        }
-
-        .back-to-top.show {
-            display: flex;
+        @media (max-width: 640px) {
+            header { padding: 20px; }
+            .filter-group { flex-direction: column; align-items: flex-start; }
+            .filter-label { min-width: auto; }
         }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>📚 Interactive English Exercises</h1>
-    <p>Master English at Your Level — From Elementary (A2) to Proficient (C1+)</p>
-</div>
-
-<div class="container">
-    <div class="stats">
-        <div class="stat-item">
-            <div class="stat-number" id="totalCount">0</div>
-            <div class="stat-label">Total Exercises</div>
+<div class="app-container">
+    <header>
+        <div class="header-title">
+            <h1>Corporate English Learning Hub</h1>
+            <p>Professional Language Training & Assessment Directory</p>
         </div>
-        <div class="stat-item">
-            <div class="stat-number" id="cefr-count">0</div>
-            <div class="stat-label">CEFR Levels</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number" id="visibleCount">0</div>
-            <div class="stat-label">Showing</div>
-        </div>
-    </div>
+    </header>
 
-    <div class="cefr-info-box">
-        <strong>📌 CEFR Levels Explained:</strong> A2 (Elementary) · B1 (Intermediate) · B2 (Upper-Intermediate) · C1 (Advanced) · C1+ (Proficient+)
-    </div>
-
-    <div class="controls" role="region" aria-label="Search and Filter Controls">
-        <div class="search-box">
-            <input 
-                type="text" 
-                id="searchInput" 
-                placeholder="Search exercises by name..." 
-                aria-label="Search exercises"
-            >
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="value" id="totalModules">0</div>
+            <div class="label">Total Modules</div>
+        </div>
+        <div class="metric-card">
+            <div class="value" id="visibleModules">0</div>
+            <div class="label">Filtered Modules</div>
+        </div>
+        <div class="metric-card">
+            <div class="value">CEFR A1–C2</div>
+            <div class="label">Proficiency Spectrum</div>
         </div>
     </div>
 
-    <div class="filters-section">
-        <div class="filter-group">
-            <span class="filter-label">Filter by CEFR Level:</span>
-            <div class="cefr-filters" id="cefrFilters" role="group" aria-label="CEFR level filters">
-                <button class="filter-btn cefr-btn cefr-a2 active" data-cefr="all" aria-pressed="true">All Levels</button>
-            </div>
+    <div class="controls-panel">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search modules by title or filename...">
         </div>
         
         <div class="filter-group">
-            <span class="filter-label">Filter by Category:</span>
-            <div class="category-filters" id="categoryFilters" role="group" aria-label="Category filters">
-                <button class="filter-btn active" data-category="all" aria-pressed="true">All</button>
+            <span class="filter-label">Level:</span>
+            <div class="filter-options" id="cefrFilters">
+                <button class="btn-filter active" data-cefr="all">All</button>
+                <button class="btn-filter" data-cefr="A1">A1</button>
+                <button class="btn-filter" data-cefr="A2">A2</button>
+                <button class="btn-filter" data-cefr="B1">B1</button>
+                <button class="btn-filter" data-cefr="B2">B2</button>
+                <button class="btn-filter" data-cefr="C1">C1/C2</button>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Category:</span>
+            <div class="filter-options" id="categoryFilters">
+                <button class="btn-filter active" data-category="all">All</button>
+                <button class="btn-filter" data-category="Professional">Professional</button>
+                <button class="btn-filter" data-category="Vocabulary">Vocabulary</button>
+                <button class="btn-filter" data-category="Grammar">Grammar</button>
+                <button class="btn-filter" data-category="Assessment">Assessment</button>
             </div>
         </div>
     </div>
 
-    <div class="results-info" id="resultsInfo"></div>
-
-    <nav aria-label="Exercise Directory">
-        <div class="grid-directory" id="exerciseGrid"></div>
-    </nav>
-
-    <div class="empty-state" id="emptyState" style="display: none;">
-        <div class="empty-state-icon">🔍</div>
-        <p>No exercises found matching your filters.</p>
-    </div>
+    <main class="directory-grid" id="directoryGrid"></main>
 </div>
-
-<button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
 
 <script>
-    // Exercise data with CEFR levels
-    const exercises = [
-        { name: "Accounting Problem 1", file: "accounting-problem-1.html", category: "Professional", cefr: "B1" },
-        { name: "Accounting Problem 2", file: "accounting-problem-2.html", category: "Professional", cefr: "B1" },
-        { name: "Accounting Problem 3", file: "accounting-problem-3.html", category: "Professional", cefr: "B2" },
-        { name: "Accounting Vocab B1", file: "accounting-vocab-b1.html", category: "Vocabulary", cefr: "B1" },
-        { name: "Always Still", file: "always-still.html", category: "Grammar", cefr: "B1" },
-        { name: "Atlantic Crossing Conditionals", file: "atlantic-crossing-conditionals.html", category: "Grammar", cefr: "B1" },
-        { name: "Cars A2", file: "cars-a2.html", category: "Vocabulary", cefr: "A2" },
-        { name: "Conditional Professional B1", file: "conditional-professional-b1.html", category: "Professional", cefr: "B1" },
-        { name: "Conditionals A2", file: "conditionals-a2.html", category: "Grammar", cefr: "A2" },
-        { name: "Conditionals B1", file: "conditionals-b1.html", category: "Grammar", cefr: "B1" },
-        { name: "Defining Relative Clauses", file: "defining-relative-clauses.html", category: "Grammar", cefr: "B1" },
-        { name: "Describing Change B1", file: "describing-change-b1.html", category: "Grammar", cefr: "B1" },
-        { name: "Dimensions Vocab Test", file: "dimensions-vocab-test.html", category: "Vocabulary", cefr: "B1" },
-        { name: "Electrical Motor Sales Proposal", file: "electrical-motor-sales-proposal.html", category: "Professional", cefr: "B2" },
-        { name: "Fasteners A2", file: "fasteners-a2.html", category: "Vocabulary", cefr: "A2" },
-        { name: "Few Little", file: "few-little.html", category: "Grammar", cefr: "B1" },
-        { name: "Finance B1", file: "finance-b1.html", category: "Professional", cefr: "B1" },
-        { name: "Grammar Challenge A2", file: "grammar-challenge-a2.html", category: "Grammar", cefr: "A2" },
-        { name: "Grammar Challenge B1", file: "grammar-challenge-b1.html", category: "Grammar", cefr: "B1" },
-        { name: "Grammar Challenge B2", file: "grammar-challenge-b2.html", category: "Grammar", cefr: "B2" },
-        { name: "Grammar Challenge Advanced", file: "grammar-challenge-advanced.html", category: "Grammar", cefr: "B2-C1-C2" },
-        { name: "Grammar Challenge Intermediate", file: "grammar-challenge-multi-2.html", category: "Grammar", cefr: "B1-B2" },
-        { name: "Hotel Vocabulary", file: "hotel-vocabulary.html", category: "Vocabulary", cefr: "A2" },
-        { name: "India's Pharma Revolution", file: "indias-pharma-revolution.html", category: "Reading", cefr: "B2" },
-        { name: "Industrial Security Vocab", file: "industrial-security-vocab.html", category: "Vocabulary", cefr: "B1" },
-        { name: "Innovative Product Design", file: "innovative-product-design.html", category: "Professional", cefr: "B2" },
-        { name: "Lab Equipment Comparison", file: "lab-equipment-comparison.html", category: "Vocabulary", cefr: "B1" },
-        { name: "Meeting Language", file: "meeting-language.html", category: "Professional", cefr: "B1" },
-        { name: "Motor Industry Affixes B1", file: "motor-industry-affixes-b1%20B1.html", category: "Vocabulary", cefr: "B1" },
-        { name: "Negotiation B1", file: "negotiation-b1.html", category: "Professional", cefr: "B1" },
-        { name: "Office A2", file: "office-a2.html", category: "Vocabulary", cefr: "A2" },
-        { name: "Organise A Meeting A2", file: "organise-a-meeting-a2.html", category: "Professional", cefr: "A2" },
-        { name: "Organise A Meeting B1", file: "organise-a-meeting-b1.html", category: "Professional", cefr: "B1" },
-        { name: "Past Simple Quiz A2", file: "past-simple-quiz-a2.html", category: "Grammar", cefr: "A2" },
-        { name: "Pharmacy B2", file: "pharmacy-b2.html", category: "Vocabulary", cefr: "B2" },
-        { name: "Phrasal Verbs at Work B1", file: "phrasal-verbs-at-work-b1.html", category: "Professional", cefr: "B1" },
-        { name: "Phrasal Verbs at Work B1+", file: "phrasal-verbs-at-work-b1%2B.html", category: "Professional", cefr: "B1-B2" },
-        { name: "Placement Test 2", file: "placement-test-2.html", category: "Tests", cefr: "All levels" },
-        { name: "Present Continuous Quiz A2", file: "present-continuous-quiz-a2.html", category: "Grammar", cefr: "A2" },
-        { name: "Present Simple Passive", file: "present-simple-passive.html", category: "Grammar", cefr: "B1" },
-        { name: "Product Design", file: "product-design.html", category: "Professional", cefr: "B1" },
-        { name: "Professional Vocabulary B2", file: "professional-vocabulary-b2.html", category: "Vocabulary", cefr: "B2" },
-        { name: "Rhyme Quiz", file: "rhyme-quiz.html", category: "Pronunciation", cefr: "A2" },
-        { name: "Supply Planner", file: "supply-planner.html", category: "Professional", cefr: "B2" },
-        { name: "Tech Vocab A2", file: "tech-vocab-a2.html", category: "Vocabulary", cefr: "A2" },
-        { name: "Travelling Phrasal Verbs", file: "travelling-phrasal-verbs.html", category: "Grammar", cefr: "B1" },
-        { name: "UK US Vocab B1", file: "uk-us-vocab-b1.html", category: "Vocabulary", cefr: "B1" },
-        { name: "Vocabulary Matchup", file: "vocabulary-matchup.html", category: "Vocabulary", cefr: "B1" },
-        { name: "Tools; What's IT For A2", file: "tools-whats-it-for-a2.html", category: "Vocabulary", cefr: "A2" },
-        { name: "Will Vs Going To", file: "will-vs-going-to.html", category: "Grammar", cefr: "A2" }
+    // Hardcoded fallback database (includes all screenshot items & fixes broken links)
+    const staticManifest = [
+        { file: "accounting-problem-1.html", title: "Accounting Problem 1", category: "Professional", cefr: "B1" },
+        { file: "accounting-problem-2.html", title: "Accounting Problem 2", category: "Professional", cefr: "B1" },
+        { file: "accounting-problem-3.html", title: "Accounting Problem 3", category: "Professional", cefr: "B2" },
+        { file: "accounting-vocab-b1.html", title: "Accounting Vocab B1", category: "Vocabulary", cefr: "B1" },
+        { file: "accounting-vocabulary-b2.html", title: "Accounting Vocabulary B2", category: "Vocabulary", cefr: "B2" },
+        { file: "always-still.html", title: "Always & Still", category: "Grammar", cefr: "B1" },
+        { file: "atlantic-crossing-conditionals.html", title: "Atlantic Crossing Conditionals", category: "Grammar", cefr: "B1" },
+        { file: "cars-a2.html", title: "Automotive Industry Terms", category: "Vocabulary", cefr: "A2" },
+        { file: "conditional-professional-b1.html", title: "Conditional Professional Contexts", category: "Professional", cefr: "B1" },
+        { file: "conditionals-a2.html", title: "Conditionals A2", category: "Grammar", cefr: "A2" },
+        { file: "conditionals-b1.html", title: "Conditionals B1", category: "Grammar", cefr: "B1" },
+        { file: "countries-nationalities-a2.html", title: "Countries & Nationalities", category: "Vocabulary", cefr: "A2" },
+        { file: "defining-relative-clauses.html", title: "Defining Relative Clauses", category: "Grammar", cefr: "B1" },
+        { file: "describing-change-b1.html", title: "Describing Trends & Change", category: "Grammar", cefr: "B1" },
+        { file: "dimensions-vocab-test.html", title: "Dimensions & Measurements", category: "Vocabulary", cefr: "B1" },
+        { file: "electrical-motor-sales-proposal.html", title: "Electrical Motor Sales Proposal", category: "Professional", cefr: "B2" },
+        { file: "fasteners-a2.html", title: "Industrial Fasteners Vocabulary", category: "Vocabulary", cefr: "A2" },
+        { file: "financial-overview-b1.html", title: "Financial Overview B1", category: "Professional", cefr: "B1" },
+        { file: "gb-us-vocab-b1.html", title: "UK vs US Business Vocab", category: "Vocabulary", cefr: "B1" },
+        { file: "grammar-challenge-a1.html", title: "Grammar Challenge A1", category: "Grammar", cefr: "A1" },
+        { file: "grammar-challenge-a2.html", title: "Grammar Challenge A2", category: "Grammar", cefr: "A2" },
+        { file: "grammar-challenge-b1.html", title: "Grammar Challenge B1", category: "Grammar", cefr: "B1" },
+        { file: "grammar-challenge-b2.html", title: "Grammar Challenge B2", category: "Grammar", cefr: "B2" },
+        { file: "grammar-challenge-advanced.html", title: "Grammar Challenge Advanced", category: "Grammar", cefr: "C1" },
+        { file: "grammar-challenge-multi-2.html", title: "Grammar Challenge Intermediate", category: "Grammar", cefr: "B1" },
+        { file: "grammar-challenge.html", title: "Grammar Challenge Master", category: "Grammar", cefr: "B2" },
+        { file: "hotel-vocabulary.html", title: "Hospitality Vocabulary", category: "Vocabulary", cefr: "A2" },
+        { file: "indias-pharma-revolution.html", title: "India's Pharma Revolution", category: "Professional", cefr: "B2" },
+        { file: "industrial-security-vocab.html", title: "Industrial Security Vocab", category: "Vocabulary", cefr: "B1" },
+        { file: "innovative-product-design.html", title: "Innovative Product Design", category: "Professional", cefr: "B2" },
+        { file: "it_insurance_system-down-b1.html", title: "IT Incident & System Down", category: "Professional", cefr: "B1" },
+        { file: "lab-equipment-comparison.html", title: "Lab Equipment Comparison", category: "Vocabulary", cefr: "B1" },
+        { file: "logistics-vocabulary-exercises.html", title: "Logistics & Supply Chain Vocab", category: "Vocabulary", cefr: "B1" },
+        { file: "meeting-language-b1.html", title: "Meeting Language B1", category: "Professional", cefr: "B1" },
+        { file: "meeting-language.html", title: "Effective Meeting Language", category: "Professional", cefr: "B1" },
+        { file: "motor-industry-affixes-b1 B1.html", title: "Motor Industry Affixes", category: "Vocabulary", cefr: "B1" },
+        { file: "negotiation-b1.html", title: "Commercial Negotiation B1", category: "Professional", cefr: "B1" },
+        { file: "negotiation-b2.html", title: "Advanced Negotiation B2", category: "Professional", cefr: "B2" },
+        { file: "office-a2.html", title: "Office Environment Vocab", category: "Vocabulary", cefr: "A2" },
+        { file: "office-vocabulary-a2.html", title: "Office Equipment & Workflow", category: "Vocabulary", cefr: "A2" },
+        { file: "organise-a-meeting-a2.html", title: "Organising Meetings A2", category: "Professional", cefr: "A2" },
+        { file: "organise-a-meeting-b1.html", title: "Organising Meetings B1", category: "Professional", cefr: "B1" },
+        { file: "past-simple-quiz-a2.html", title: "Past Simple Quiz", category: "Grammar", cefr: "A2" },
+        { file: "pharmacy-b2.html", title: "Pharmaceutical Terminology", category: "Vocabulary", cefr: "B2" },
+        { file: "phrasal-verbs-at-work-b1.html", title: "Workplace Phrasal Verbs B1", category: "Professional", cefr: "B1" },
+        { file: "phrasal-verbs-at-work-b1+.html", title: "Workplace Phrasal Verbs B1+", category: "Professional", cefr: "B2" },
+        { file: "placement-test-2.html", title: "Comprehensive Placement Test", category: "Assessment", cefr: "A1-C2" },
+        { file: "present-continuous-quiz-a2.html", title: "Present Continuous Quiz", category: "Grammar", cefr: "A2" },
+        { file: "present-simple-passive.html", title: "Present Simple Passive", category: "Grammar", cefr: "B1" },
+        { file: "product-design.html", title: "Product Design Specification", category: "Professional", cefr: "B1" },
+        { file: "professional-vocabulary-b2.html", title: "Executive Vocabulary B2", category: "Vocabulary", cefr: "B2" },
+        { file: "rhyme-quiz.html", title: "Pronunciation & Rhymes", category: "Vocabulary", cefr: "A2" },
+        { file: "safety-signs-modals-a2.html", title: "Safety Signs & Modals", category: "Professional", cefr: "A2" },
+        { file: "supply-planner.html", title: "Supply Chain Planner Scenario", category: "Professional", cefr: "B2" },
+        { file: "tech-vocab-a2.html", title: "Technical Vocab A2", category: "Vocabulary", cefr: "A2" },
+        { file: "tools-whats-it-for-a2.html", title: "Tools & Equipment Usage", category: "Vocabulary", cefr: "A2" },
+        { file: "travelling-phrasal-verbs.html", title: "Travel Phrasal Verbs", category: "Grammar", cefr: "B1" },
+        { file: "uk-us-vocab-b1.html", title: "UK/US English Terminology", category: "Vocabulary", cefr: "B1" },
+        { file: "will-vs-going-to.html", title: "Future Tenses: Will vs Going To", category: "Grammar", cefr: "A2" }
     ];
 
-    let filteredExercises = [...exercises];
-    let currentCefr = "all";
-    let currentCategory = "all";
+    let allModules = [...staticManifest];
+    let selectedCefr = "all";
+    let selectedCategory = "all";
 
-    const cefrLevels = ["A2", "B1", "B2", "C1", "C1+"];
-    const cefrColors = {
-        "A2": "a2",
-        "B1": "b1",
-        "B2": "b2",
-        "C1": "c1",
-        "C1+": "c2"
-    };
+    // Automatic metadata metadata generator for dynamic files
+    function deriveMetadata(filename) {
+        const lower = filename.toLowerCase();
+        let cefr = "General";
+        if (lower.includes("-a1")) cefr = "A1";
+        else if (lower.includes("-a2")) cefr = "A2";
+        else if (lower.includes("-b1+")) cefr = "B2";
+        else if (lower.includes("-b1")) cefr = "B1";
+        else if (lower.includes("-b2")) cefr = "B2";
+        else if (lower.includes("-c1")) cefr = "C1";
 
-    // Initialize
-    function init() {
-        populateCefrFilters();
-        populateCategories();
-        updateStats();
-        render();
-        setupEventListeners();
-    }
-
-    function populateCefrFilters() {
-        const filterContainer = document.getElementById('cefrFilters');
-        filterContainer.innerHTML = '';
-        
-        const allBtn = document.createElement('button');
-        allBtn.className = 'filter-btn cefr-btn cefr-a2 active';
-        allBtn.textContent = 'All Levels';
-        allBtn.dataset.cefr = 'all';
-        allBtn.setAttribute('aria-pressed', 'true');
-        allBtn.addEventListener('click', () => filterByCefr(allBtn));
-        filterContainer.appendChild(allBtn);
-
-        cefrLevels.forEach(level => {
-            const btn = document.createElement('button');
-            const colorClass = cefrColors[level];
-            btn.className = `filter-btn cefr-btn cefr-${colorClass}`;
-            btn.textContent = level;
-            btn.dataset.cefr = level;
-            btn.setAttribute('aria-pressed', 'false');
-            btn.addEventListener('click', () => filterByCefr(btn));
-            filterContainer.appendChild(btn);
-        });
-    }
-
-    function populateCategories() {
-        const filterContainer = document.getElementById('categoryFilters');
-        const categories = ["All", ...new Set(exercises.map(e => e.category))].sort();
-        
-        filterContainer.innerHTML = '';
-        categories.forEach(cat => {
-            const btn = document.createElement('button');
-            btn.className = `filter-btn ${cat === 'All' ? 'active' : ''}`;
-            btn.textContent = cat;
-            btn.dataset.category = cat.toLowerCase();
-            btn.setAttribute('aria-pressed', cat === 'All');
-            btn.addEventListener('click', () => filterByCategory(btn));
-            filterContainer.appendChild(btn);
-        });
-    }
-
-    function filterByCefr(btn) {
-        document.querySelectorAll('.cefr-filters .filter-btn').forEach(b => {
-            b.classList.remove('active');
-            b.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-        
-        currentCefr = btn.dataset.cefr;
-        const searchTerm = document.getElementById('searchInput').value;
-        applyFilters(searchTerm);
-    }
-
-    function filterByCategory(btn) {
-        document.querySelectorAll('.category-filters .filter-btn').forEach(b => {
-            b.classList.remove('active');
-            b.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-        
-        currentCategory = btn.dataset.category;
-        const searchTerm = document.getElementById('searchInput').value;
-        applyFilters(searchTerm);
-    }
-
-    function applyFilters(searchTerm) {
-        const term = searchTerm.toLowerCase().trim();
-        
-        filteredExercises = exercises.filter(ex => {
-            const matchesSearch = !term || ex.name.toLowerCase().includes(term);
-            const matchesCefr = currentCefr === 'all' || ex.cefr.includes(currentCefr) || ex.cefr === 'All levels';
-            const matchesCategory = currentCategory === 'all' || ex.category.toLowerCase() === currentCategory;
-            return matchesSearch && matchesCefr && matchesCategory;
-        });
-
-        render();
-    }
-
-    function setupEventListeners() {
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            applyFilters(e.target.value);
-        });
-
-        document.getElementById('backToTop').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('backToTop');
-            btn.classList.toggle('show', window.scrollY > 300);
-        });
-    }
-
-    function updateStats() {
-        document.getElementById('totalCount').textContent = exercises.length;
-        document.getElementById('cefr-count').textContent = cefrLevels.length;
-    }
-
-    function getCefrBadgeClass(cefr) {
-        if (cefr === 'All levels') return 'badge-c2';
-        if (cefr.includes('C1+')) return 'badge-c2';
-        if (cefr.includes('C1')) return 'badge-c1';
-        if (cefr.includes('B2')) return 'badge-b2';
-        if (cefr.includes('B1')) return 'badge-b1';
-        if (cefr.includes('A2')) return 'badge-a2';
-        return 'badge-b1';
-    }
-
-    function render() {
-        const grid = document.getElementById('exerciseGrid');
-        const emptyState = document.getElementById('emptyState');
-        const resultsInfo = document.getElementById('resultsInfo');
-        
-        grid.innerHTML = '';
-
-        if (filteredExercises.length === 0) {
-            emptyState.style.display = 'block';
-            resultsInfo.innerHTML = '';
-            document.getElementById('visibleCount').textContent = '0';
-            return;
+        let category = "Professional";
+        if (lower.includes("vocab") || lower.includes("fastener") || lower.includes("car") || lower.includes("rhyme")) {
+            category = "Vocabulary";
+        } else if (lower.includes("grammar") || lower.includes("quiz") || lower.includes("passive") || lower.includes("conditional")) {
+            category = "Grammar";
+        } else if (lower.includes("test") || lower.includes("placement")) {
+            category = "Assessment";
         }
 
-        emptyState.style.display = 'none';
-        document.getElementById('visibleCount').textContent = filteredExercises.length;
+        const title = filename
+            .replace(".html", "")
+            .replace(/[-_]/g, " ")
+            .replace(/\b\w/g, c => c.toUpperCase());
 
-        const cefrLabel = currentCefr === 'all' ? 'all levels' : `${currentCefr} level`;
-        const categoryLabel = currentCategory === 'all' ? 'all categories' : `${currentCategory} category`;
-        resultsInfo.innerHTML = `
-            <div>📊 Showing <strong>${filteredExercises.length}</strong> exercises</div>
-            <div>🎯 Filter: <strong>${cefrLabel}</strong> · <strong>${categoryLabel}</strong></div>
-        `;
+        return { file: filename, title, category, cefr };
+    }
 
-        filteredExercises.forEach(exercise => {
-            const link = document.createElement('a');
-            link.href = exercise.file;
-            link.className = 'exercise-card';
-            link.setAttribute('role', 'button');
-            link.setAttribute('tabindex', '0');
-            
-            const badgeClass = getCefrBadgeClass(exercise.cefr);
-            
-            link.innerHTML = `
-                <div class="exercise-card-label">
-                    <div>${exercise.name}</div>
-                    <div class="category-badge">${exercise.category}</div>
-                    <div class="cefr-badge ${badgeClass}">${exercise.cefr}</div>
-                </div>
-            `;
+    // Auto-fetch newly added HTML files directly from GitHub API
+    async function syncWithGitHub() {
+        try {
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
+            const repoOwner = window.location.hostname.split('.')[0];
+            const repoName = pathSegments[0];
 
-            link.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    link.click();
+            if (!repoOwner || !repoName) return;
+
+            const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/`);
+            if (!response.ok) return;
+
+            const files = await response.json();
+            const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.name !== 'index.html');
+
+            const existingFiles = new Set(allModules.map(m => m.file));
+            htmlFiles.forEach(file => {
+                if (!existingFiles.has(file.name)) {
+                    allModules.push(deriveMetadata(file.name));
                 }
             });
 
-            grid.appendChild(link);
+            render();
+        } catch (err) {
+            console.log("GitHub API live sync skipped; using manifest fallback.", err);
+        }
+    }
+
+    function render() {
+        const grid = document.getElementById("directoryGrid");
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+
+        const filtered = allModules.filter(mod => {
+            const matchesSearch = mod.title.toLowerCase().includes(searchTerm) || mod.file.toLowerCase().includes(searchTerm);
+            const matchesCefr = selectedCefr === "all" || mod.cefr.toUpperCase().includes(selectedCefr);
+            const matchesCategory = selectedCategory === "all" || mod.category === selectedCategory;
+            return matchesSearch && matchesCefr && matchesCategory;
+        });
+
+        document.getElementById("totalModules").textContent = allModules.length;
+        document.getElementById("visibleModules").textContent = filtered.length;
+
+        grid.innerHTML = "";
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="empty-state">No matching learning modules found.</div>`;
+            return;
+        }
+
+        filtered.forEach(mod => {
+            const badgeClass = `badge-${mod.cefr.toLowerCase().replace(/[^a-z0-9]/g, '')}` || 'badge-general';
+            const card = document.createElement("a");
+            card.className = "module-card";
+            card.href = mod.file;
+            card.innerHTML = `
+                <div class="module-title">${mod.title}</div>
+                <div class="module-meta">
+                    <span class="category-tag">${mod.category}</span>
+                    <span class="cefr-badge ${badgeClass}">${mod.cefr}</span>
+                </div>
+            `;
+            grid.appendChild(card);
         });
     }
 
-    // Start the app
-    document.addEventListener('DOMContentLoaded', init);
-</script>
+    function setupEventListeners() {
+        document.getElementById("searchInput").addEventListener("input", render);
 
+        document.getElementById("cefrFilters").addEventListener("click", e => {
+            if (!e.target.classList.contains("btn-filter")) return;
+            document.querySelectorAll("#cefrFilters .btn-filter").forEach(b => b.classList.remove("active"));
+            e.target.classList.add("active");
+            selectedCefr = e.target.dataset.cefr;
+            render();
+        });
+
+        document.getElementById("categoryFilters").addEventListener("click", e => {
+            if (!e.target.classList.contains("btn-filter")) return;
+            document.querySelectorAll("#categoryFilters .btn-filter").forEach(b => b.classList.remove("active"));
+            e.target.classList.add("active");
+            selectedCategory = e.target.dataset.category;
+            render();
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        setupEventListeners();
+        render();
+        syncWithGitHub();
+        
+        // Prevent default navigation for demonstration if hosted locally without target files
+        document.getElementById("directoryGrid").addEventListener("click", (e) => {
+            const card = e.target.closest("a");
+            if (card && window.location.protocol === "file:") {
+                console.log(`Navigating to: ${card.getAttribute("href")}`);
+            }
+        });
+    });
+</script>
 </body>
 </html>
